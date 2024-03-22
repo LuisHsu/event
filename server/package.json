@@ -1,0 +1,13 @@
+{
+  "name": "server",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Luis Hsu",
+  "dependencies": {
+    "express": "^4.19.1",
+    "socket.io": "^4.7.5"
+  }
+}
