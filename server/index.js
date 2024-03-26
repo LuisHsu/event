@@ -2,11 +2,15 @@ import Express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
 
-import HostAPI from "./host";
+import HostAPI from "./host.js";
 
 const app = Express();
 const httpServer = createServer(app);
-const io = new Server(httpServer);
+const io = new Server(httpServer, {
+    cors:{
+        origin: "*"
+    }
+});
 
 HostAPI(io);
 
