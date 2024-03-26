@@ -16,6 +16,8 @@
 
 ### Set timer
 
+### Clear timer
+
 ### Start poll
 
 ### End poll
@@ -51,3 +53,5 @@
 ### [on] End poll
 
 ### [on] Set timer
+
+### [on] Clear timer
