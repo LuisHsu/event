@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button"
 import {Cast, XLg} from "react-bootstrap-icons"
 
 import "./URLTable.css"
+import { display_url } from "./socket"
 
 function URLTable({list, onRemove}){
     return <>
@@ -10,7 +11,7 @@ function URLTable({list, onRemove}){
         <ListGroup>
             {list.map((url, index) => <ListGroup.Item key={index} className="url-item">
                 <b className="url-name">{url}</b>
-                <Button variant="link"><Cast /></Button>
+                <Button variant="link" onClick={display_url.bind(this, url)}><Cast /></Button>
                 <Button variant="link" onClick={onRemove.bind(this, index)}><XLg /></Button>
             </ListGroup.Item>)}
         </ListGroup>
