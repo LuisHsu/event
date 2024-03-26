@@ -1,0 +1,10 @@
+.url-item{
+    display: flex;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.url-name{
+    flex-grow: 1;
+    align-self: center;
+    font-weight: normal;
+}

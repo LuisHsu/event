@@ -20,6 +20,9 @@ function Control(){
     const onSaveUrl = () => {
         setUrlList([...url_list, url]);
     }
+    const onRemoveUrl = (index) => {
+        setUrlList(url_list.toSpliced(index, 1));
+    }
 
     return (
         <Container className="content">
@@ -32,7 +35,7 @@ function Control(){
             </InputGroup>
             <Container><Row>
                 <Col>
-                    <URLTable list={url_list}/>
+                    <URLTable list={url_list} onRemove={onRemoveUrl}/>
                 </Col>
                 <Col>
                     <h3>Timer &amp; Poll</h3>
