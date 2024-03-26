@@ -2,8 +2,6 @@
 
 ## Host
 
-### [POST] Login
-
 ### Display URL
 
 ### [GET] Guest
@@ -24,8 +22,6 @@
 
 ## Speaker
 
-### [POST] Login
-
 ### [on] Change speaker
 
 ### [on] Change question
@@ -43,8 +39,6 @@
 ### Submit answer
 
 ## Display
-
-### [POST] Login
 
 ### [on] Show URL
 
