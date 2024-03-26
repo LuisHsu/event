@@ -8,6 +8,7 @@ import Col from 'react-bootstrap/Col'
 
 import './App.css';
 import Control from "./Control";
+import Guests from "./Guests"
 
 function App() {
 
@@ -19,7 +20,7 @@ function App() {
 
   const pageMap = {
     "control": <Control />,
-    "guest": <Container className="content">guest</Container>
+    "guest": <Guests />
   }
 
   return (
@@ -42,29 +43,7 @@ function App() {
       </Navbar>
 
       {pageMap[page]}
-
-      {/* <Tab.Container defaultActiveKey="control">
-        <Navbar bg="dark" data-bs-theme="dark">
-          <Container>
-            <Navbar.Brand>Host panel</Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Nav variant="underline" >
-                <Nav.Item>
-                  <Nav.Link eventKey="control">Control</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey="guest">Guests</Nav.Link>
-                </Nav.Item>
-              </Nav>
-            </Navbar.Collapse>
-          </Container>
-        </Navbar>
-        <Tab.Content>
-          <Control/>
-          <Tab.Pane eventKey="guest">Guest</Tab.Pane>
-        </Tab.Content>
-      </Tab.Container> */}
+      
     </div>
   );
 }

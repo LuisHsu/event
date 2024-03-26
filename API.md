@@ -4,6 +4,8 @@
 
 ### Display URL
 
+### Display reset
+
 ### [GET] Guest
 
 ### [DELETE] Guest
