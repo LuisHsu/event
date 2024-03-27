@@ -1,7 +1,7 @@
 import io from "socket.io-client"
-import {host_token} from "./constants"
+import {host_token, ws_server} from "./constants"
 
-const socket = io("ws://localhost:5050/host", {
+const socket = io(`${ws_server}/host`, {
     auth:{
         token: host_token
     }
