@@ -36,8 +36,6 @@
 
 ### [GET] Login
 
-`/guest/<guest_id>`
-
 ### [on] Change question
 
 ### Submit answer

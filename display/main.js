@@ -6,11 +6,18 @@ let window = null;
 
 const socket = io(`${ws_server}/display`, {
     auth:{
-        token: host_token
+        token: display_token
+    }
+})
+
+socket.on("show_url", url => {
+    if(window !== null){
+        window.loadURL(url);
+    }else{
+        console.error("no window")
     }
 })
 
 app.whenReady().then(() => {
     window = new BrowserWindow({fullscreen: true});
-    window.loadURL("https://www.google.com")
 })
