@@ -6,15 +6,15 @@
 
 ### Display reset
 
-### [GET] Guest
+### Get Guest list
 
-### [DELETE] Guest
+### Delete Guest
 
 ### Assign speaker
 
 ### Use question
 
-### [POST] Create question
+### Create question
 
 ### Set timer
 
@@ -34,9 +34,11 @@
 
 ## Guest
 
-### [GET] Login
+### Login
 
-### [on] Change question
+### [on] Start poll
+
+### [on] Start poll
 
 ### Submit answer
 
@@ -46,11 +48,9 @@
 
 ### [on] Show question
 
+### [on] Show quess
+
 ### [on] Show answer
-
-### [on] Start poll
-
-### [on] End poll
 
 ### [on] Set timer
 
