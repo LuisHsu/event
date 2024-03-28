@@ -35,6 +35,10 @@ const Guest = sequelize.define("Guest", {
     score: {
         type: DataTypes.INTEGER,
         defaultValue: 0
+    },
+    online: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     }
 })
 

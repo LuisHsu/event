@@ -4,54 +4,54 @@
 
 ### Display URL
 
-### Display reset
+### [on] Guest list
 
-### Get Guest list
+### Add Guest
 
-### Delete Guest
+### TODO: Delete Guest
 
-### Assign speaker
+### TODO: Assign speaker
 
-### Use question
+### TODO: Use question
 
-### Create question
+### TODO: Create question
 
-### Set timer
+### TODO: Set timer
 
-### Clear timer
+### TODO: Clear timer
 
-### Start poll
+### TODO: Start poll
 
-### End poll
+### TODO: End poll
 
 ## Speaker
 
-### [on] Change speaker
+### TODO: [on] Change speaker
 
-### [on] Change question
+### TODO: [on] Change question
 
-### Submit answer
+### TODO: Submit answer
 
 ## Guest
 
 ### Login
 
-### [on] Start poll
+### TODO: Submit answer
 
-### [on] End poll
+### TODO: [on] Start poll
 
-### Submit answer
+### TODO: [on] End poll
 
 ## Display
 
 ### [on] Show URL
 
-### [on] Show question
+### TODO: [on] Show question
 
-### [on] Show quess
+### TODO: [on] Show quess
 
-### [on] Show answer
+### TODO: [on] Show answer
 
-### [on] Set timer
+### TODO: [on] Set timer
 
-### [on] Clear timer
+### TODO: [on] Clear timer

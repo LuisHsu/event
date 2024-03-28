@@ -15,8 +15,13 @@ function App(){
         setName(guest_name)
     }
 
+    const onLogout = () => {
+        setId(null)
+        setName(null)
+    }
+
     return <Container id="app-container">
-        {(id === null) ? <Login onLogin={onLogin}/> : <Panel id={id} name={name}/>}
+        {(id === null) ? <Login onLogin={onLogin} onLogout={onLogout}/> : <Panel id={id} name={name}/>}
     </Container>
 }
 

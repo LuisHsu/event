@@ -1,0 +1,9 @@
+.add-guest{
+    display: flex;
+    width: max-content;
+    margin-right: 10px;
+}
+#btns-wrap{
+    display: flex;
+    justify-content: end;
+}

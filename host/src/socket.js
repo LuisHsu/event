@@ -6,9 +6,21 @@ const socket = io(`${ws_server}/host`, {
         token: host_token
     }
 })
+export var guest_list = [];
+var guest_updater = null;
+export function register_guests(updater){
+    guest_updater = updater;
+}
 
+socket.on("guest_list", guests => {
+    guest_list = guests;
+    if(guest_updater != null){
+        guest_updater(guest_list);
+    }
+})
 socket.on('connect', () => {
     console.log(`Socket connected with ID: ${socket.id}`)
+    socket.emit("get_guests")
 })
 
 export function display_url(url){

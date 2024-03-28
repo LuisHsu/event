@@ -1,4 +1,5 @@
 import { guest_token } from "../constants.mjs";
+import { list_guest } from "./host.js";
 import Guest from "./model/guest.js";
 
 function auth(socket, next){
@@ -12,15 +13,8 @@ function auth(socket, next){
             where: {id: socket.handshake.auth.id}
         })
         .then(entry => {
-            const {id, name} = socket.handshake.auth;
             if(entry !== null){
-                Guest.update({name}, {
-                    where: {id}
-                })
-                .then(() => {
-                    console.log(`Guest ${id} login`)
-                    next()
-                })
+                next()
             }else{
                 next(new Error("invalid ticket ID"))
             }
@@ -34,21 +28,20 @@ function GuestAPI(io){
     io.of("guest")
     .use(auth)
     .on('connection', socket => {
-        // if(socket.handshake.auth
-        //     && socket.handshake.auth.token
-        //     && socket.handshake.auth.token == guest_token)
-        // {
-        //     host_socket = socket;
-        //     console.log("host connected")
+        const {id, name} = socket.handshake.auth;
+        Guest.update({name, online: true}, {where: {id}})
+        .then(() => {
+            console.log(`Guest ${id} connected`)
+            list_guest()
 
-        //     host_socket.on("display_url", display_url)
-        //     host_socket.on('disconnect', (reason) => {
-        //         console.log(`host disconnect: ${reason}`)
-        //         host_socket = null;
-        //     })
-        // }else{
-        //     socket.disconnect();
-        // }
+            socket.on('disconnect', (reason) => {
+                Guest.update({online: false}, {where: {id}})
+                .then(() => {
+                    console.log(`Guest ${id} disconnect: ${reason}`)
+                    list_guest();
+                })
+            })
+        })
     })
 }
 

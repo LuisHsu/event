@@ -4,7 +4,7 @@ import "./Login.css"
 import { useState } from "react";
 import { login } from "./socket";
 
-function Login({onLogin}){
+function Login({onLogin, onLogout}){
 
     const [username, setUsername] = useState("");
     const [error, setError] = useState(null);
@@ -12,10 +12,7 @@ function Login({onLogin}){
     const onLoginSubmit = (e) => {
         e.preventDefault()
         if(username !== ""){
-            login(ticket_id, username)
-            .then(() => {
-                onLogin(ticket_id, username);
-            })
+            login(ticket_id, username, onLogin, onLogout)
             .catch((err) => {
                 setError(err.message);
             })
