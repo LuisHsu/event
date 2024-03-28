@@ -9,22 +9,25 @@ function display_url(url) {
 
 function HostAPI (io) {
     io.of("host")
-    .on('connection', socket => {
+    .use((socket, next) => {
         if(socket.handshake.auth
             && socket.handshake.auth.token
             && socket.handshake.auth.token == host_token)
         {
-            host_socket = socket;
-            console.log("host connected")
-
-            host_socket.on("display_url", display_url)
-            host_socket.on('disconnect', (reason) => {
-                console.log(`host disconnect: ${reason}`)
-                host_socket = null;
-            })
+            next()
         }else{
-            socket.disconnect();
+            next(new Error("Bad request"))
         }
+    })
+    .on('connection', socket => {
+        host_socket = socket;
+        console.log("host connected")
+
+        host_socket.on("display_url", display_url)
+        host_socket.on('disconnect', (reason) => {
+            console.log(`host disconnect: ${reason}`)
+            host_socket = null;
+        })
     })
     
 }

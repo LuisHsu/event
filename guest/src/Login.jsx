@@ -2,33 +2,22 @@ import { Button, Form } from "react-bootstrap";
 
 import "./Login.css"
 import { useState } from "react";
-import {http_server} from "./constants.mjs"
-
-function login(id, username){
-    return fetch(`${http_server}/login`, {
-        method: "POST",
-        mode: "cors",
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({id, username})
-    })
-    .then(res => res.json())
-}
+import { login } from "./socket";
 
 function Login({onLogin}){
 
     const [username, setUsername] = useState("");
-    const [is_valid, setIsValid] = useState(true);
+    const [error, setError] = useState(null);
     const ticket_id = window.location.href.split("/").pop()
     const onLoginSubmit = (e) => {
         e.preventDefault()
         if(username !== ""){
             login(ticket_id, username)
-            .then(data => {
-                if(data === null){
-                    setIsValid(false);
-                }else{
-                    onLogin(data.id, data.name);
-                }
+            .then(() => {
+                onLogin(ticket_id, username);
+            })
+            .catch((err) => {
+                setError(err.message);
             })
         }
     }
@@ -37,10 +26,10 @@ function Login({onLogin}){
         <Form.Group className="mb-3" >
             <Form.Label>Ticket ID</Form.Label>
             <Form.Control type="text" value={ticket_id} readOnly disabled
-                isInvalid={!is_valid}
+                isInvalid={error !== null}
             />
             <Form.Control.Feedback type="invalid">
-                Invalid ticket ID
+                {error}
             </Form.Control.Feedback>
         </Form.Group>
         <Form.Group className="mb-3" >

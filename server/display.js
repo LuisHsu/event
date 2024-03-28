@@ -11,20 +11,24 @@ export function show_url(url) {
 }
 
 function DisplayAPI (io) {
-    io.of("display").on('connection', socket => {
+    io.of("display")
+    .use((socket, next) => {
         if(socket.handshake.auth
             && socket.handshake.auth.token
             && socket.handshake.auth.token == display_token)
         {
-            display_socket = socket;
-            console.log("display connected")
-            display_socket.on('disconnect', (reason) => {
-                console.log(`display disconnect: ${reason}`)
-                display_socket = null;
-            })
+            next()
         }else{
-            socket.disconnect();
+            next(new Error("Bad request"))
         }
+    })
+    .on('connection', socket => {
+        display_socket = socket;
+        console.log("display connected")
+        display_socket.on('disconnect', (reason) => {
+            console.log(`display disconnect: ${reason}`)
+            display_socket = null;
+        })
     })
 }
 

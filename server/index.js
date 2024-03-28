@@ -16,12 +16,9 @@ const io = new Server(httpServer, {
     }
 });
 
-app.use(BodyParser.json())
-app.use(cors())
-
 HostAPI(io);
 DisplayAPI(io);
-GuestAPI(io, app);
+GuestAPI(io);
 
 httpServer.listen(5050, () => {
     console.log("Server listening on port 5050");

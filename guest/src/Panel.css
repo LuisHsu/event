@@ -1,0 +1,19 @@
+#main-panel{
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
+}
+#choice-wrap{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: center;
+}
+.choice-btn{
+    margin: 0.5rem 0;
+    padding: 1rem;
+}
+.submit-btn{
+    margin-top: 2rem;
+    padding: 1rem;
+}
