@@ -38,7 +38,7 @@
 
 ### [on] Start poll
 
-### [on] Start poll
+### [on] End poll
 
 ### Submit answer
 

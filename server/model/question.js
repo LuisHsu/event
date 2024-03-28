@@ -2,7 +2,11 @@ import {Sequelize, DataTypes} from 'sequelize'
 
 const sequelize = new Sequelize({
     dialect: 'sqlite',
-    storage: 'db.sqlite'
+    storage: 'db.sqlite',
+    logging: false,
+    define:{
+        timestamps: false
+    }
 });
 
 const Question = sequelize.define("Question", {

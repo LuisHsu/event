@@ -1,0 +1,7 @@
+#app-container{
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    /* background-color: var(--bs-dark); */
+}

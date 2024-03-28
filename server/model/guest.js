@@ -2,18 +2,23 @@ import {Sequelize, DataTypes} from 'sequelize'
 
 const sequelize = new Sequelize({
     dialect: 'sqlite',
-    storage: 'db.sqlite'
+    storage: 'db.sqlite',
+    logging: false,
+    define:{
+        timestamps: false
+    }
 });
 
 const Guest = sequelize.define("Guest", {
     id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
+        type: DataTypes.STRING,
+        allowNull: false,
         primaryKey: true
     },
     name: {
         type: DataTypes.STRING,
-        allowNull: false
+        defaultValue: null,
+        allowNull: true
     },
     answer_num: {
         type: DataTypes.INTEGER,
@@ -32,5 +37,7 @@ const Guest = sequelize.define("Guest", {
         defaultValue: 0
     }
 })
+
+await Guest.sync()
 
 export default Guest
