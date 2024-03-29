@@ -27,6 +27,7 @@ app.use((req, res, next) => {
         next();
     }
 })
+app.use(BodyParser.json())
 
 HostAPI(io);
 DisplayAPI(io);

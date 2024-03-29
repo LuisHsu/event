@@ -10,3 +10,16 @@ export function get_questions(){
     })
     .then(res => res.json())
 }
+
+export function add_question(data){
+    return fetch(`${http_server}/question`, {
+        method: "PUT",
+        headers: {
+            "Authorization": `Basic ${host_token}`,
+            "Content-Type": "application/json"
+        },
+        mode: "cors",
+        body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+}

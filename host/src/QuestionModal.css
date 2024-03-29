@@ -1,0 +1,17 @@
+.question-model-list .input-group:not(:last-child) * {
+    border-bottom: 0;
+    border-radius: var(--bs-border-radius) var(--bs-border-radius) 0 0;
+}
+.question-model-list {
+    max-height: 250px;
+    overflow-y: scroll;
+}
+.question-model-question{
+    height: 100px;
+    resize: none;
+}
+.question-model-new_answer{
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
