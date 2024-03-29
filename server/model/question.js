@@ -37,4 +37,6 @@ const Question = sequelize.define("Question", {
     },
 })
 
+await Question.sync()
+
 export default Question;

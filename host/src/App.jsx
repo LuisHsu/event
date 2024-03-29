@@ -6,6 +6,7 @@ import Nav from "react-bootstrap/Nav"
 import './App.css';
 import Control from "./Control";
 import Guests from "./Guests"
+import Question from "./Question.jsx";
 
 function App() {
 
@@ -17,12 +18,13 @@ function App() {
 
   const pageMap = {
     "control": <Control />,
-    "guest": <Guests />
+    "guest": <Guests />,
+    "question": <Question />
   }
 
   return (
     <div className="App">
-      <Navbar bg="dark" data-bs-theme="dark">
+      <Navbar id="navbar" bg="dark" data-bs-theme="dark">
         <Container>
           <Navbar.Brand>Host panel</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -33,6 +35,9 @@ function App() {
               </Nav.Item>
               <Nav.Item>
                 <Nav.Link eventKey="guest" onClick={navigatePage.bind(this, "guest")}>Guests</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="question" onClick={navigatePage.bind(this, "question")}>Questions</Nav.Link>
               </Nav.Item>
             </Nav>
           </Navbar.Collapse>

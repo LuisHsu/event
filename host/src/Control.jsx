@@ -26,6 +26,7 @@ function Control(){
 
     return (
         <Container className="content">
+            <h3>Display</h3>
             <InputGroup className="mb-3">
                 <Form.Control type="text" placeholder="URL to display"
                     value={url} onChange={(e) => setUrl(e.target.value)}
@@ -33,14 +34,8 @@ function Control(){
                 <Button variant="primary" onClick={onDisplayUrl}>display</Button>
                 <Button variant="secondary" onClick={onSaveUrl}>save</Button>
             </InputGroup>
-            <Container><Row>
-                <Col>
-                    <URLTable list={url_list} onRemove={onRemoveUrl}/>
-                </Col>
-                <Col>
-                    <h3>Timer &amp; Poll</h3>
-                </Col>
-            </Row></Container>
+            <h3>Timer &amp; Poll</h3>
+            <URLTable list={url_list} onRemove={onRemoveUrl}/>
         </Container>
     )
 }

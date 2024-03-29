@@ -6,6 +6,7 @@ const socket = io(`${ws_server}/host`, {
         token: host_token
     }
 })
+
 export var guest_list = [];
 var guest_updater = null;
 export function register_guests(updater){

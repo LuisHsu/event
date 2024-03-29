@@ -6,15 +6,23 @@
 
 ### [on] Guest list
 
+### Get Guests
+
 ### Add Guest
 
 ### Delete Guest
+
+### TODO: [on] Question list
+
+### TODO: Get Questions
 
 ### TODO: Assign speaker
 
 ### TODO: Use question
 
 ### TODO: Create question
+
+### TODO: Edit question
 
 ### TODO: Set timer
 
