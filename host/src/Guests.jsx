@@ -1,7 +1,7 @@
 import Container from "react-bootstrap/Container"
 import { Button, Table, InputGroup, Form } from "react-bootstrap";
 import { useState } from "react";
-import { CheckLg, MegaphoneFill, XCircle, XLg } from "react-bootstrap-icons";
+import { CheckLg, Mic, MicMute, PlusLg, XCircle, XLg } from "react-bootstrap-icons";
 
 import "./Guests.css"
 
@@ -22,14 +22,14 @@ function Guests(){
     return (
         <Container className="content">
             <h3>Guest list</h3>
-            <div id="btns-wrap">
+            <div className="btns-wrap">
                 <InputGroup className="add-guest">
                     <Form.Control type="text" placeholder="Guest ID to add"
                         value={new_guest} onChange={(e) => setNewGuest(e.target.value)}
                     />
-                    <Button variant="success" onClick={onAddGuest}>Add guest</Button>
+                    <Button variant="success" onClick={onAddGuest}><PlusLg/> Add guest</Button>
                 </InputGroup>
-                <Button variant="secondary">Clear speaker</Button>
+                <Button variant="secondary"><MicMute/> Clear speaker</Button>
             </div>    
             <Table id="guest-table">
                 <thead><tr>
@@ -42,7 +42,7 @@ function Guests(){
                     <th>Online</th>
                     <th>Actions</th>
                 </tr></thead>
-                <tbody id="table-body">
+                <tbody>
                     {guests.map(guest => <tr key={guest.id}>
                         <td>{guest.id}</td>
                         <td>{guest.name}</td>
@@ -52,7 +52,7 @@ function Guests(){
                         <td>{guest.speak_num}</td>
                         <td>{guest.online ? <CheckLg color="var(--bs-success)"/> : <XLg color="var(--bs-danger)"/>}</td>
                         <td>
-                            <Button variant="link"><MegaphoneFill color="var(--bs-primary)"/></Button>
+                            <Button variant="link"><Mic color="var(--bs-primary)"/></Button>
                             <Button variant="link" onClick={onDeleteGuest.bind(this, guest.id)}><XCircle color="var(--bs-danger)"/></Button>
                         </td>
                     </tr>)}
