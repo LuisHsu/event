@@ -6,10 +6,18 @@ import { CheckLg, MegaphoneFill, XCircle, XLg } from "react-bootstrap-icons";
 import "./Guests.css"
 
 function Guests(){
-    const {guest_list, register_guests} = require('./socket');
+    const {guest_list, register_guests, add_guest, delete_guest} = require('./socket');
     const [guests, setGuests] = useState(guest_list);
     const [new_guest, setNewGuest] = useState("");
     register_guests(setGuests);
+
+    const onAddGuest = () => {
+        add_guest(new_guest)
+        setNewGuest("")
+    }
+    const onDeleteGuest = (id) => {
+        delete_guest(id)
+    }
 
     return (
         <Container className="content">
@@ -19,11 +27,11 @@ function Guests(){
                     <Form.Control type="text" placeholder="Guest ID to add"
                         value={new_guest} onChange={(e) => setNewGuest(e.target.value)}
                     />
-                    <Button variant="success">Add guest</Button>
+                    <Button variant="success" onClick={onAddGuest}>Add guest</Button>
                 </InputGroup>
                 <Button variant="secondary">Clear speaker</Button>
             </div>    
-            <Table>
+            <Table id="guest-table">
                 <thead><tr>
                     <th>ID</th>
                     <th>Name</th>
@@ -45,7 +53,7 @@ function Guests(){
                         <td>{guest.online ? <CheckLg color="var(--bs-success)"/> : <XLg color="var(--bs-danger)"/>}</td>
                         <td>
                             <Button variant="link"><MegaphoneFill color="var(--bs-primary)"/></Button>
-                            <Button variant="link"><XCircle color="var(--bs-danger)"/></Button>
+                            <Button variant="link" onClick={onDeleteGuest.bind(this, guest.id)}><XCircle color="var(--bs-danger)"/></Button>
                         </td>
                     </tr>)}
                 </tbody>

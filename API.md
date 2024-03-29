@@ -8,7 +8,7 @@
 
 ### Add Guest
 
-### TODO: Delete Guest
+### Delete Guest
 
 ### TODO: Assign speaker
 

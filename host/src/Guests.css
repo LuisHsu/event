@@ -7,3 +7,6 @@
     display: flex;
     justify-content: end;
 }
+#guest-table{
+    margin-top: 10px;
+}

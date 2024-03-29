@@ -17,6 +17,24 @@ function display_url(url) {
     show_url(url);
 }
 
+function add_guest(id) {
+    Guest.findOne({where: {id}})
+    .then(entry => {
+        if(entry === null){
+            Guest.create({id}).then(list_guest);
+        }
+    })
+}
+
+function delete_guest(id) {
+    Guest.findOne({where: {id}})
+    .then(entry => {
+        if(entry !== null){
+            return entry.destroy().then(list_guest)
+        }
+    })
+}
+
 function HostAPI (io) {
     io.of("host")
     .use((socket, next) => {
@@ -34,6 +52,8 @@ function HostAPI (io) {
         console.log("host connected")
         host_socket.on("get_guests", list_guest)
         host_socket.on("display_url", display_url)
+        host_socket.on("add_guest", add_guest)
+        host_socket.on("delete_guest", delete_guest)
         host_socket.on('disconnect', (reason) => {
             console.log(`host disconnect: ${reason}`)
             host_socket = null;

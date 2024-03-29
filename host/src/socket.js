@@ -26,3 +26,11 @@ socket.on('connect', () => {
 export function display_url(url){
     socket.emit("display_url", url)
 }
+
+export function add_guest(id){
+    socket.emit("add_guest", id)
+}
+
+export function delete_guest(id){
+    socket.emit("delete_guest", id)
+}
