@@ -21,5 +21,4 @@ export function add_question(data){
         mode: "cors",
         body: JSON.stringify(data)
     })
-    .then(res => res.json())
 }

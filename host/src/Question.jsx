@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Container, Table, Button, Badge, Dropdown, Form, ButtonGroup} from "react-bootstrap";
-import { get_questions } from "./question";
+import { add_question, get_questions } from "./question";
 import { Cast, CheckLg, PencilSquare, PlusLg, Shuffle, XCircle, XLg } from "react-bootstrap-icons";
 
 import "./Question.css"
@@ -13,11 +13,14 @@ function Question(){
     const [show_add, setShowAdd] = useState(false);
     const [filter_cate, setFilter_cate] = useState(null);
 
-    useEffect(() => {
+    const get_question_list = () => {
         get_questions().then(questions => {
-            setQuestionList(questions);
-            setCategories([...new Set(questions.map(question => question.category))])
-        })
+        setQuestionList(questions);
+        setCategories([...new Set(questions.map(question => question.category))])
+    })}
+
+    useEffect(() => {
+        get_question_list();
     }, []);
 
     const onShowClose = () => {
@@ -25,7 +28,7 @@ function Question(){
     }
 
     const onAddQuestion = (value) => {
-        console.log(value)
+        add_question(value).then(get_question_list)
     }
 
     const onFilterSelect = (cate) => {
