@@ -8,12 +8,22 @@ function get_questions(_, res){
 }
 
 function add_question(req, res){
-    Question.create(req.body).then(() => res.end())
+    Question.create(req.body)
+    .then(data => data.toJSON())
+    .then(JSON.stringify)
+    .then(data => {res.end(data)})
+}
+
+function delete_question(req, res){
+    Question.destroy({where: req.body})
+    .then(JSON.stringify)
+    .then(data => {res.end(data)})
 }
 
 function QuestionAPI(app){
     app.get("/questions", get_questions)
     app.put("/question", add_question)
+    app.delete("/question", delete_question)
 }
 
 export default QuestionAPI;

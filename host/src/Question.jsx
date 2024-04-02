@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Container, Table, Button, Badge, Dropdown, Form, ButtonGroup} from "react-bootstrap";
-import { add_question, get_questions } from "./question";
+import { add_question, delete_question, get_questions } from "./question";
 import { Cast, CheckLg, PencilSquare, PlusLg, Shuffle, XCircle, XLg } from "react-bootstrap-icons";
 
 import "./Question.css"
@@ -29,6 +29,10 @@ function Question(){
 
     const onAddQuestion = (value) => {
         add_question(value).then(get_question_list)
+    }
+
+    const onDeleteQuestion = (id) => {
+        delete_question(id).then(get_question_list)
     }
 
     const onFilterSelect = (cate) => {
@@ -88,7 +92,9 @@ function Question(){
                     <td>
                         <div className="action-wrap">
                             <Button variant="link"><PencilSquare color="var(--bs-primary)"/></Button>
-                            <Button variant="link"><XCircle color="var(--bs-danger)"/></Button>
+                            <Button variant="link"
+                                onClick={onDeleteQuestion.bind(this, question.id)}
+                            ><XCircle color="var(--bs-danger)"/></Button>
                         </div>
                     </td>
                 </tr>)}

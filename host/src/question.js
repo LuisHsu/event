@@ -22,3 +22,15 @@ export function add_question(data){
         body: JSON.stringify(data)
     })
 }
+
+export function delete_question(id){
+    return fetch(`${http_server}/question`, {
+        method: "DELETE",
+        headers: {
+            "Authorization": `Basic ${host_token}`,
+            "Content-Type": "application/json"
+        },
+        mode: "cors",
+        body: JSON.stringify({id})
+    })
+}
