@@ -34,3 +34,15 @@ export function delete_question(id){
         body: JSON.stringify({id})
     })
 }
+
+export function edit_question(data){
+    return fetch(`${http_server}/question`, {
+        method: "POST",
+        headers: {
+            "Authorization": `Basic ${host_token}`,
+            "Content-Type": "application/json"
+        },
+        mode: "cors",
+        body: JSON.stringify(data)
+    })
+}

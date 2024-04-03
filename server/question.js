@@ -20,10 +20,17 @@ function delete_question(req, res){
     .then(data => {res.end(data)})
 }
 
+function update_question(req, res){
+    Question.update(req.body, {where: {id: req.body.id}})
+    .then(JSON.stringify)
+    .then(data => {res.end(data)})
+}
+
 function QuestionAPI(app){
     app.get("/questions", get_questions)
     app.put("/question", add_question)
     app.delete("/question", delete_question)
+    app.post("/question", update_question)
 }
 
 export default QuestionAPI;
