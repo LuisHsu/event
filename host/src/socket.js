@@ -28,6 +28,10 @@ export function display_url(url){
     socket.emit("display_url", url)
 }
 
+export function fullscreen(value){
+    socket.emit("fullscreen", value)
+}
+
 export function add_guest(id){
     socket.emit("add_guest", id)
 }

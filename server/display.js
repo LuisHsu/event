@@ -10,6 +10,14 @@ export function show_url(url) {
     }
 }
 
+export function fullscreen(value) {
+    if(display_socket !== null){
+        display_socket.emit("fullscreen", value);
+    }else{
+        console.error("no display")
+    }
+}
+
 function DisplayAPI (io) {
     io.of("display")
     .use((socket, next) => {

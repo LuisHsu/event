@@ -18,6 +18,14 @@ socket.on("show_url", url => {
     }
 })
 
+socket.on("fullscreen", value => {
+    if(window !== null){
+        window.setFullScreen(value);
+    }else{
+        console.error("no window")
+    }
+})
+
 app.whenReady().then(() => {
-    window = new BrowserWindow({fullscreen: true});
+    window = new BrowserWindow({fullscreen: false, autoHideMenuBar: true});
 })
