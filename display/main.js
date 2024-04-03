@@ -28,4 +28,7 @@ socket.on("fullscreen", value => {
 
 app.whenReady().then(() => {
     window = new BrowserWindow({fullscreen: false, autoHideMenuBar: true});
+    if(process.env["DEVEL"] === "1"){
+        window.loadURL("http://localhost:3001")
+    }
 })

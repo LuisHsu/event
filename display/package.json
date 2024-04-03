@@ -5,10 +5,33 @@
   "type": "module",
   "main": "main.js",
   "dependencies": {
+    "bootstrap": "^5.3.3",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.10.2",
+    "react-bootstrap-icons": "^1.11.3",
+    "react-dom": "^18.2.0",
+    "react-scripts": "^5.0.1",
     "electron": "^29.1.5",
     "socket.io-client": "^4.7.5"
   },
   "scripts": {
+    "react": "react-scripts start",
+    "build": "react-scripts build",
     "start": "electron ."
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
