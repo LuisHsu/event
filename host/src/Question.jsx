@@ -13,6 +13,8 @@ function Question(){
     const [show_add, setShowAdd] = useState(false);
     const [show_edit, setShowEdit] = useState(false);
     const [edit_init, setEditInit] = useState({});
+    const [selected, setSelected] = useState(null);
+    const [filter_unused, setFilter_unused] = useState(false);
     const [filter_cate, setFilter_cate] = useState(null);
 
     const get_question_list = () => {
@@ -24,6 +26,15 @@ function Question(){
     useEffect(() => {
         get_question_list();
     }, []);
+
+    useEffect(() => {
+        setSelected(null);
+    }, [filter_cate, filter_unused, question_list])
+
+    function question_filter(question){
+        return (filter_cate === null || question.category === filter_cate)
+        && (filter_unused === false || question.used === false);
+    }
 
     const onShowClose = () => {
         setShowAdd(false);
@@ -42,6 +53,15 @@ function Question(){
         delete_question(id).then(get_question_list)
     }
 
+    const onSelectQuestion = (id) => {
+        setSelected(id)
+    }
+
+    const onRandomClick = () => {
+        const questions = question_list.filter(question_filter);
+        setSelected(questions[Math.floor(Math.random() * questions.length)].id)
+    }
+
     return <Container className="content">
         <h3>Questions</h3>
         <div id="btns-wrap">
@@ -56,9 +76,9 @@ function Question(){
                         {categories.map(cate => <Dropdown.Item key={cate} eventKey={cate}>{cate}</Dropdown.Item>)}
                     </Dropdown.Menu>
                 </Dropdown>
-                <Form.Check type="switch" label="Unused only"/>
+                <Form.Check type="switch" label="Unused only" onClick={() => setFilter_unused(!filter_unused)}/>
             </div>
-            <Button variant="secondary"><Shuffle/> Random</Button>
+            <Button variant="secondary" onClick={onRandomClick}><Shuffle/> Random</Button>
             <Dropdown as={ButtonGroup} autoClose="outside" align="end">
                 <Button variant="primary"><Cast/> Display categories</Button>
                 <Dropdown.Toggle split variant="primary"/>
@@ -71,7 +91,7 @@ function Question(){
             <Button variant="primary"><Cast/> Display question</Button>
             <Button variant="success" onClick={setShowAdd.bind(this, true)}><PlusLg/> Add question</Button>
         </div> 
-        <Table id="question-table">
+        <Table id="question-table" hover>
             <thead><tr>
                 <th>ID</th>
                 <th>Category</th>
@@ -81,10 +101,10 @@ function Question(){
                 <th>Actions</th>
             </tr></thead>
             <tbody>
-                {question_list.filter(question => (
-                    filter_cate === null || question.category === filter_cate
-                ))
-                .map(question => <tr key={question.id}>
+                {question_list.filter(question_filter).map(question => <tr key={question.id}
+                    className={(selected !== null && question.id === selected) ? "question-active" : ""}
+                    onClick={onSelectQuestion.bind(this, question.id)}
+                >
                     <td>{question.id}</td>
                     <td>{question.category}</td>
                     <td>{question.question}</td>
@@ -94,7 +114,7 @@ function Question(){
                         >{answer}
                         </Badge>
                     )}</td>
-                    <td>{question.used ? <CheckLg color="var(--bs-primary)"/> : null}</td>
+                    <td>{question.used ? <CheckLg/> : null}</td>
                     <td>
                         <div className="action-wrap">
                             <Button variant="link"
@@ -102,10 +122,13 @@ function Question(){
                                     setEditInit(question);
                                     setShowEdit(true);
                                 }}
-                            ><PencilSquare color="var(--bs-primary)"/></Button>
-                            <Button variant="link"
-                                onClick={onDeleteQuestion.bind(this, question.id)}
-                            ><XCircle color="var(--bs-danger)"/></Button>
+                            ><PencilSquare/></Button>
+                            {
+                                (selected === null || question.id !== selected) &&
+                                <Button variant="link"
+                                    onClick={onDeleteQuestion.bind(this, question.id)}
+                                ><XCircle color="var(--bs-danger)"/></Button>
+                            }
                         </div>
                     </td>
                 </tr>)}

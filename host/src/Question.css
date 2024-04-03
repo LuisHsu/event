@@ -2,6 +2,10 @@
     margin-top: 10px;
     vertical-align: middle;
 }
+#question-table td{
+    background-color: inherit;
+    color: inherit;
+}
 #btns-wrap{
     display: flex;
     gap: 10px;
@@ -17,7 +21,16 @@
 }
 .action-wrap{
     display: flex;
+    color: inherit;
+}
+.question-active .btn{
+    display: flex;
+    color: inherit;
 }
 .form-cate-btn{
     border-radius: var(--bs-border-radius) 0 0 var(--bs-border-radius);
+}
+.question-active{
+    background-color: var(--bs-primary);
+    color: var(--bs-light);
 }
