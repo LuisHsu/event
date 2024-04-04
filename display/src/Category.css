@@ -1,0 +1,30 @@
+#cate-title{
+    text-align: center;
+    font-size: 4em;
+    padding: 0.6em 0;
+    font-family: cursive, sans-serif;
+    text-shadow: 0 -3px 8px var(--bs-info);
+}
+
+#cate-grid{
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+}
+
+#cate-wrap{
+    height: fit-content;
+}
+
+.cate-card{
+    width: 250px;
+    display: inline-block;
+    margin: 0.5em;
+    font-size: 2.25em;
+    padding: 0.5em;
+    background-color: #ffffff18;
+    border: none;
+    color: var(--bs-success-border-subtle);
+    box-shadow: 0 0 3px 3px var(--bs-success-border-subtle), 0 0 3px 3px inset var(--bs-success-border-subtle);
+}

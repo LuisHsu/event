@@ -1,12 +1,9 @@
-import { Container } from "react-bootstrap";
-
 import "./App.css"
+import Category from "./Category";
 
 function App(){
 
-    return <Container id="app-container">
-        
-    </Container>
+    return <Category />
 }
 
 export default App;
