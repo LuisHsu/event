@@ -5,6 +5,7 @@ import { Cast, CheckLg, PencilSquare, PlusLg, Shuffle, XCircle, XLg } from "reac
 
 import "./Question.css"
 import QuestionModal from "./QuestionModal";
+import { display_categories, select_category } from "./socket";
 
 function Question(){
 
@@ -79,13 +80,15 @@ function Question(){
                 <Form.Check type="switch" label="Unused only" onClick={() => setFilter_unused(!filter_unused)}/>
             </div>
             <Button variant="secondary" onClick={onRandomClick}><Shuffle/> Random</Button>
-            <Dropdown as={ButtonGroup} autoClose="outside" align="end">
-                <Button variant="primary"><Cast/> Display categories</Button>
+            <Dropdown as={ButtonGroup} align="end"onSelect={select_category.bind(this)}>
+                <Button variant="primary" onClick={display_categories}><Cast/> Display categories</Button>
                 <Dropdown.Toggle split variant="primary"/>
                 <Dropdown.Menu>
-                    <Dropdown.Item>Action</Dropdown.Item>
-                    <Dropdown.Item>Another action</Dropdown.Item>
-                    <Dropdown.Item>Something else</Dropdown.Item>
+                    {categories.map(cate => 
+                        <Dropdown.Item key={cate} eventKey={cate}>
+                            {cate}
+                        </Dropdown.Item>
+                    )}
                 </Dropdown.Menu>
             </Dropdown>
             <Button variant="primary"><Cast/> Display question</Button>

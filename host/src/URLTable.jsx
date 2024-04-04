@@ -7,7 +7,7 @@ import { display_url } from "./socket"
 
 function URLTable({list, onRemove}){
     return <>
-        <h3>Saved URL</h3>
+        <h4>Saved URL</h4>
         <ListGroup>
             {list.map((url, index) => <ListGroup.Item key={index} className="url-item">
                 <b className="url-name">{url}</b>

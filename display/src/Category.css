@@ -11,6 +11,7 @@
     flex-grow: 1;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 #cate-wrap{
@@ -27,4 +28,9 @@
     border: none;
     color: var(--bs-success-border-subtle);
     box-shadow: 0 0 3px 3px var(--bs-success-border-subtle), 0 0 3px 3px inset var(--bs-success-border-subtle);
+}
+
+.cate-active{
+    background-color: var(--bs-success);
+    color: var(--bs-light);
 }

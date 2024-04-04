@@ -30,6 +30,7 @@ function Control(){
 
     return (
         <Container className="content">
+            <h3>Timer &amp; Poll</h3>
             <h3>Display</h3>
             <Form.Check checked={isFullscreen} label="Fullscreen" onChange={onToggleFullscreen}/>
             <InputGroup className="mb-3">
@@ -39,7 +40,6 @@ function Control(){
                 <Button variant="primary" onClick={onDisplayUrl}>display</Button>
                 <Button variant="secondary" onClick={onSaveUrl}>save</Button>
             </InputGroup>
-            <h3>Timer &amp; Poll</h3>
             <URLTable list={url_list} onRemove={onRemoveUrl}/>
         </Container>
     )

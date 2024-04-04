@@ -1,4 +1,6 @@
+import { Sequelize } from "sequelize";
 import { display_token } from "../constants.mjs";
+import Question from "./model/question.js";
 
 let display_socket = null;
 
@@ -16,6 +18,26 @@ export function fullscreen(value) {
     }else{
         console.error("no display")
     }
+}
+
+export function select_category(value) {
+    if(display_socket !== null){
+        display_socket.emit("select_category", value);
+    }else{
+        console.error("no display")
+    }
+}
+
+export function display_categories(){
+    Question.findAll({
+        attributes: ["category", [Sequelize.fn('COUNT', Sequelize.col('id')), "count"]],
+        group:["category"],
+        where: {used: false}
+    })
+    .then(categories => categories.map(cate => cate.toJSON()))
+    .then(categories => {
+        display_socket.emit("show_categories", categories);
+    })
 }
 
 function DisplayAPI (io) {

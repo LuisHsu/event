@@ -32,6 +32,14 @@ export function fullscreen(value){
     socket.emit("fullscreen", value)
 }
 
+export function display_categories(){
+    socket.emit("display_categories")
+}
+
+export function select_category(name){
+    socket.emit("select_category", name)
+}
+
 export function add_guest(id){
     socket.emit("add_guest", id)
 }
