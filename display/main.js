@@ -60,5 +60,5 @@ app.whenReady().then(() => {
             contextIsolation: false
         }
     });
-    loadPage();
+    loadPage("question");
 })
