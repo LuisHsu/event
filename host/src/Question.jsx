@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { Container, Table, Button, Badge, Dropdown, Form, ButtonGroup} from "react-bootstrap";
+import { Container, Table, Button, Badge, Dropdown, Form, ButtonGroup, InputGroup} from "react-bootstrap";
 import { add_question, delete_question, edit_question, get_questions } from "./question";
 import { Cast, CheckLg, PencilSquare, PlusLg, Shuffle, XCircle, XLg } from "react-bootstrap-icons";
 
 import "./Question.css"
 import QuestionModal from "./QuestionModal";
-import { display_categories, display_question, select_category } from "./socket";
+import { clear_timer, display_categories, display_question, select_category, set_timer } from "./socket";
 
 function Question(){
 
@@ -17,6 +17,7 @@ function Question(){
     const [selected, setSelected] = useState(null);
     const [filter_unused, setFilter_unused] = useState(false);
     const [filter_cate, setFilter_cate] = useState(null);
+    const [time, setTime] = useState(1);
 
     const get_question_list = () => {
         get_questions().then(questions => {
@@ -69,10 +70,23 @@ function Question(){
         }
     }
 
+    const onSetTimer = () => {
+        set_timer(time);
+    }
+
+    const onClearTimer = () => {
+        clear_timer();
+    }
+
     return <Container className="content">
         <h3>Questions</h3>
         <div id="btns-wrap">
-            <Dropdown as={ButtonGroup} align="end"onSelect={select_category.bind(this)}>
+            <InputGroup>
+                <Form.Control type="number" value={time} min={1} onChange={(e) => setTime(e.target.value)}/>
+                <Button variant="primary" onClick={onSetTimer}>Set timer</Button>
+                <Button variant="danger" onClick={onClearTimer}>Clear timer</Button>
+            </InputGroup>
+            <Dropdown as={ButtonGroup} align="end" onSelect={select_category.bind(this)}>
                 <Button variant="primary" onClick={display_categories}><Cast/> Display categories</Button>
                 <Dropdown.Toggle split variant="primary"/>
                 <Dropdown.Menu>

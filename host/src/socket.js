@@ -51,3 +51,11 @@ export function add_guest(id){
 export function delete_guest(id){
     socket.emit("delete_guest", id)
 }
+
+export function set_timer(time){
+    socket.emit("set_timer", time)
+}
+
+export function clear_timer(){
+    socket.emit("clear_timer")
+}

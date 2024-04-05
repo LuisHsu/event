@@ -3,15 +3,19 @@ import { Alert, Container } from "react-bootstrap";
 import { ipcRenderer } from "electron";
 
 import "./Question.css"
+import Timer from "./Timer.jsx";
+import { regist_handler, send } from "./socket.js";
 
 function Question(){
 
     const [question, setQuestion] = useState({});
-
-    ipcRenderer.on("show_question", (_, data) => setQuestion(data));
+    const [time, setTime] = useState(null);
 
     useEffect(() => {
-        ipcRenderer.send("get_question");
+        regist_handler("show_question", setQuestion);
+        regist_handler("set_timer", setTime);
+        regist_handler("clear_timer", setTime.bind(this, null));
+        send("get_question");
     }, []);
 
     return <Container id="app-container">
@@ -24,9 +28,7 @@ function Question(){
                     {answer}
                 </Alert>
             )}
-            <div id="timer">
-                --
-            </div>
+            <Timer time={time} setTime={setTime}/>
         </div>
     </Container>
 }

@@ -11,6 +11,12 @@
     gap: 10px;
     margin-bottom: 1em;
 }
+#btns-wrap .input-group{
+    width: fit-content;
+}
+#btns-wrap .form-control{
+    width: 8ch;
+}
 #unused-switch{
     flex-grow: 1;
 }

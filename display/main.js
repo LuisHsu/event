@@ -79,3 +79,11 @@ socket.on("select_category", category => {
         console.error("no window")
     }
 })
+
+socket.on("set_timer", time => {
+    if(window !== null){
+        window.webContents.send("set_timer", time);
+    }else{
+        console.error("no window")
+    }
+})

@@ -47,6 +47,22 @@ export function display_question(id){
     })
 }
 
+export function set_timer(time) {
+    if(display_socket !== null){
+        display_socket.emit("set_timer", time);
+    }else{
+        console.error("no display")
+    }
+}
+
+export function clear_timer() {
+    if(display_socket !== null){
+        display_socket.emit("clear_timer");
+    }else{
+        console.error("no display")
+    }
+}
+
 function DisplayAPI (io) {
     io.of("display")
     .use((socket, next) => {

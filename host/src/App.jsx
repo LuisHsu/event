@@ -10,7 +10,7 @@ import Question from "./Question.jsx";
 
 function App() {
 
-  const [page, setPage] = useState("control");
+  const [page, setPage] = useState("url");
 
   const navigatePage = (key) => {
     setPage(key);
