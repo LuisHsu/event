@@ -87,3 +87,10 @@ socket.on("set_timer", time => {
         console.error("no window")
     }
 })
+socket.on("clear_timer", () => {
+    if(window !== null){
+        window.webContents.send("clear_timer");
+    }else{
+        console.error("no window")
+    }
+})
