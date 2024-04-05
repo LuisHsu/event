@@ -7,7 +7,7 @@ import Container from "react-bootstrap/Container"
 import { display_url, fullscreen } from "./socket"
 import URLTable from "./URLTable"
 
-function Control(){
+function URL(){
 
     const [url, setUrl] = useState("")
     const [url_list, setUrlList] = useState([])
@@ -30,8 +30,7 @@ function Control(){
 
     return (
         <Container className="content">
-            <h3>Timer &amp; Poll</h3>
-            <h3>Display</h3>
+            <h3>Display URL</h3>
             <Form.Check checked={isFullscreen} label="Fullscreen" onChange={onToggleFullscreen}/>
             <InputGroup className="mb-3">
                 <Form.Control type="text" placeholder="URL to display"
@@ -45,4 +44,4 @@ function Control(){
     )
 }
 
-export default Control;
+export default URL;

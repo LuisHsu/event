@@ -4,7 +4,7 @@ import Container from "react-bootstrap/Container"
 import Nav from "react-bootstrap/Nav"
 
 import './App.css';
-import Control from "./Control";
+import URL from "./URL";
 import Guests from "./Guests"
 import Question from "./Question.jsx";
 
@@ -17,7 +17,7 @@ function App() {
   }
 
   const pageMap = {
-    "control": <Control />,
+    "url": <URL />,
     "guest": <Guests />,
     "question": <Question />
   }
@@ -31,7 +31,7 @@ function App() {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav variant="underline" activeKey={page}>
               <Nav.Item>
-                <Nav.Link eventKey="control" onClick={navigatePage.bind(this, "control")}>Control</Nav.Link>
+                <Nav.Link eventKey="url" onClick={navigatePage.bind(this, "url")}>URL</Nav.Link>
               </Nav.Item>
               <Nav.Item>
                 <Nav.Link eventKey="guest" onClick={navigatePage.bind(this, "guest")}>Guests</Nav.Link>
