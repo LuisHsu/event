@@ -4,6 +4,7 @@ import io from "socket.io-client"
 
 let window = null;
 let categories = [];
+let question = {};
 
 function loadPage(path = ""){
     return window.loadFile("build/index.html", {
@@ -27,6 +28,9 @@ app.whenReady().then(() => {
 
 ipcMain.on("get_categories", () => {
     window.webContents.send("show_categories", categories);
+})
+ipcMain.on("get_question", () => {
+    window.webContents.send("show_question", question);
 })
 
 const socket = io(`${ws_server}/display`, {
@@ -59,12 +63,10 @@ socket.on("show_categories", data => {
         console.error("no window")
     }
 })
-socket.on("show_question", question => {
+socket.on("show_question", data => {
+    question = data;
     if(window !== null){
-        loadPage("question")
-        .then(() => {
-            window.webContents.send("show_question", question);
-        })
+        loadPage("question");
     }else{
         console.error("no window")
     }

@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Container } from "react-bootstrap";
+import { ipcRenderer } from "electron";
 
 import "./Category.css"
-import { useState } from "react";
-import { ipcRenderer } from "electron";
 
 function Category(){
     const [categories, setCategories] = useState([]);
