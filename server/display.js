@@ -40,6 +40,13 @@ export function display_categories(){
     })
 }
 
+export function display_question(id){
+    Question.findOne({where: {id}})
+    .then(question => {
+        display_socket.emit("show_question", question.toJSON());
+    })
+}
+
 function DisplayAPI (io) {
     io.of("display")
     .use((socket, next) => {

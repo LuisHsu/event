@@ -40,6 +40,10 @@ export function select_category(name){
     socket.emit("select_category", name)
 }
 
+export function display_question(id){
+    socket.emit("display_question", id)
+}
+
 export function add_guest(id){
     socket.emit("add_guest", id)
 }

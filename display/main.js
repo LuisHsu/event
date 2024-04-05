@@ -1,14 +1,33 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 import { display_token, ws_server } from "../constants.mjs";
 import io from "socket.io-client"
 
 let window = null;
+let categories = [];
 
 function loadPage(path = ""){
-    if(process.env["DEVEL"] === "1"){
-        return window.loadURL(`http://localhost:3001/${path}`)
-    }
+    return window.loadFile("build/index.html", {
+        hash: path
+    })
 }
+
+app.whenReady().then(() => {
+    window = new BrowserWindow({
+        fullscreen: false,
+        autoHideMenuBar: false,
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false,
+        }
+    });
+    loadPage("").then(() => {
+        window.webContents.openDevTools();
+    });
+})
+
+ipcMain.on("get_categories", () => {
+    window.webContents.send("show_categories", categories);
+})
 
 const socket = io(`${ws_server}/display`, {
     auth:{
@@ -32,11 +51,19 @@ socket.on("fullscreen", value => {
     }
 })
 
-socket.on("show_categories", categories => {
+socket.on("show_categories", data => {
+    categories = data;
     if(window !== null){
-        loadPage("category")
+        loadPage("category");
+    }else{
+        console.error("no window")
+    }
+})
+socket.on("show_question", question => {
+    if(window !== null){
+        loadPage("question")
         .then(() => {
-            window.webContents.send("show_categories", categories);
+            window.webContents.send("show_question", question);
         })
     }else{
         console.error("no window")
@@ -49,16 +76,4 @@ socket.on("select_category", category => {
     }else{
         console.error("no window")
     }
-})
-
-app.whenReady().then(() => {
-    window = new BrowserWindow({
-        fullscreen: false,
-        autoHideMenuBar: false,
-        webPreferences: {
-            nodeIntegration: true,
-            contextIsolation: false
-        }
-    });
-    loadPage("question");
 })

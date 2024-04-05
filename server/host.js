@@ -1,5 +1,5 @@
 import { host_token } from "../constants.mjs";
-import { display_categories, fullscreen, select_category, show_url } from "./display.js";
+import { display_categories, display_question, fullscreen, select_category, show_url } from "./display.js";
 import Guest from "./model/guest.js";
 
 let host_socket = null;
@@ -57,6 +57,7 @@ function HostAPI (io) {
         host_socket.on("fullscreen", fullscreen)
         host_socket.on("display_categories", display_categories)
         host_socket.on("select_category", select_category)
+        host_socket.on("display_question", display_question)
         host_socket.on('disconnect', (reason) => {
             console.log(`host disconnect: ${reason}`)
             host_socket = null;

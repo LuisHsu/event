@@ -5,7 +5,7 @@ import { Cast, CheckLg, PencilSquare, PlusLg, Shuffle, XCircle, XLg } from "reac
 
 import "./Question.css"
 import QuestionModal from "./QuestionModal";
-import { display_categories, select_category } from "./socket";
+import { display_categories, display_question, select_category } from "./socket";
 
 function Question(){
 
@@ -63,23 +63,15 @@ function Question(){
         setSelected(questions[Math.floor(Math.random() * questions.length)].id)
     }
 
+    const onDisplayQuestion = () => {
+        if(selected !== null){
+            display_question(selected);
+        }
+    }
+
     return <Container className="content">
         <h3>Questions</h3>
         <div id="btns-wrap">
-            <div id="filter-wrap">
-                <Dropdown onSelect={setFilter_cate.bind(this)}>
-                    <Dropdown.Toggle variant="outline-secondary">
-                        {(filter_cate === null) ? <i>All</i> : filter_cate}
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                        <Dropdown.Item eventKey={null}><XLg/> Clear filter</Dropdown.Item>
-                        <Dropdown.Divider />
-                        {categories.map(cate => <Dropdown.Item key={cate} eventKey={cate}>{cate}</Dropdown.Item>)}
-                    </Dropdown.Menu>
-                </Dropdown>
-                <Form.Check type="switch" label="Unused only" onClick={() => setFilter_unused(!filter_unused)}/>
-            </div>
-            <Button variant="secondary" onClick={onRandomClick}><Shuffle/> Random</Button>
             <Dropdown as={ButtonGroup} align="end"onSelect={select_category.bind(this)}>
                 <Button variant="primary" onClick={display_categories}><Cast/> Display categories</Button>
                 <Dropdown.Toggle split variant="primary"/>
@@ -91,9 +83,23 @@ function Question(){
                     )}
                 </Dropdown.Menu>
             </Dropdown>
-            <Button variant="primary"><Cast/> Display question</Button>
-            <Button variant="success" onClick={setShowAdd.bind(this, true)}><PlusLg/> Add question</Button>
+            <Button variant="primary" onClick={onDisplayQuestion}><Cast/> Display question</Button>
+            <Button variant="secondary" onClick={onRandomClick}><Shuffle/> Random</Button>
         </div> 
+        <div id="filter-wrap">
+            <Dropdown onSelect={setFilter_cate.bind(this)}>
+                <Dropdown.Toggle variant="outline-secondary">
+                    {(filter_cate === null) ? <i>All</i> : filter_cate}
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                    <Dropdown.Item eventKey={null}><XLg/> Clear filter</Dropdown.Item>
+                    <Dropdown.Divider />
+                    {categories.map(cate => <Dropdown.Item key={cate} eventKey={cate}>{cate}</Dropdown.Item>)}
+                </Dropdown.Menu>
+            </Dropdown>
+            <Form.Check id="unused-switch" type="switch" label="Unused only" onClick={() => setFilter_unused(!filter_unused)}/>
+            <Button variant="success" onClick={setShowAdd.bind(this, true)}><PlusLg/> Add question</Button>
+        </div>
         <Table id="question-table" hover>
             <thead><tr>
                 <th>ID</th>

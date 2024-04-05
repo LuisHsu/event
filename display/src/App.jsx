@@ -1,17 +1,24 @@
+import React, { useEffect, useState } from "react";
 import "./App.css"
-import Category from "./Category";
-import Question from "./Question";
+import Category from "./Category.jsx";
+import Question from "./Question.jsx";
 
 function App(){
-    const page_map = {
-        "/category": <Category />,
-        "/question": <Question />
-    };
-    if(location.pathname in page_map){
-        return page_map[location.pathname];
-    }else{
-        return <></>;
-    } 
+
+    const [page, setPage] = useState("")
+
+    useEffect(() => {
+        setPage(location.hash);
+    }, [location.hash]);
+
+    switch(page){
+        case "#category":
+            return <Category />;
+        case "#question":
+            return <Question />;
+        default:
+            return <></>;
+    }
 }
 
 export default App;
