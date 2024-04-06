@@ -2,12 +2,15 @@ const Path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    mode: 'development',
-    entry: Path.resolve(__dirname, "src", "index.js"),
+    mode: 'production',
+    entry: {
+        category: Path.resolve(__dirname, "src", "category.js"),
+        question: Path.resolve(__dirname, "src", "question.js"),
+    },
     target: 'electron-renderer',
     output: {
         path: Path.resolve(__dirname, 'build'),
-        filename: 'bundle.js'
+        filename: '[name].js'
     },
     module: {
         rules: [
@@ -24,12 +27,19 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: 'src/index.html'
+            template: 'src/index.html',
+            chunks: ['category'],
+            filename: 'category.html'
+        }),
+        new HtmlWebpackPlugin({
+            template: 'src/index.html',
+            chunks: ['question'],
+            filename: 'question.html'
+        }),
+        new HtmlWebpackPlugin({
+            template: 'src/index.html',
+            chunks: [],
+            filename: 'index.html'
         })
-    ],
-    devServer: {
-        host: 'localhost',
-        port: 3050,
-        historyApiFallback: true
-    }
+    ]
 }

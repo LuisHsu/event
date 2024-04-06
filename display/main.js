@@ -1,16 +1,10 @@
-import { app, BrowserWindow, ipcMain } from "electron";
+import { app, BrowserWindow } from "electron";
 import { display_token, ws_server } from "../constants.mjs";
 import io from "socket.io-client"
 
 let window = null;
 let categories = [];
 let question = {};
-
-function loadPage(path = ""){
-    return window.loadFile("build/index.html", {
-        hash: path
-    })
-}
 
 app.whenReady().then(() => {
     window = new BrowserWindow({
@@ -21,16 +15,9 @@ app.whenReady().then(() => {
             contextIsolation: false,
         }
     });
-    loadPage("").then(() => {
+    window.loadFile("build/index.html").then(() => {
         window.webContents.openDevTools();
     });
-})
-
-ipcMain.on("get_categories", () => {
-    window.webContents.send("show_categories", categories);
-})
-ipcMain.on("get_question", () => {
-    window.webContents.send("show_question", question);
 })
 
 const socket = io(`${ws_server}/display`, {
@@ -57,16 +44,26 @@ socket.on("fullscreen", value => {
 
 socket.on("show_categories", data => {
     categories = data;
+    console.log("show categories")
     if(window !== null){
-        loadPage("category");
+        window.loadFile("build/category.html")
+        .then(() => {
+            console.log("category loaded")
+            window.webContents.send("show_categories", categories);
+        })
     }else{
         console.error("no window")
     }
 })
 socket.on("show_question", data => {
     question = data;
+    console.log("show question")
     if(window !== null){
-        loadPage("question");
+        window.loadFile("build/question.html")
+        .then(() => {
+            console.log("question loaded")
+            window.webContents.send("show_question", question);
+        })
     }else{
         console.error("no window")
     }

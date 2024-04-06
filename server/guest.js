@@ -40,12 +40,13 @@ function GuestAPI(io){
         .then(() => {
             console.log(`Guest ${id} connected`)
             list_guest()
-
+            socket.join(id)
             socket.on('disconnect', (reason) => {
                 Guest.update({online: false}, {where: {id}})
                 .then(() => {
                     console.log(`Guest ${id} disconnect: ${reason}`)
                     list_guest();
+                    socket.leave(id)
                 })
             })
         })

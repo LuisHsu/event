@@ -4,7 +4,7 @@ import { ipcRenderer } from "electron";
 
 import "./Question.css"
 import Timer from "./Timer.jsx";
-import { regist_handler, send } from "./socket.js";
+import { regist_handler } from "./socket.js";
 
 function Question(){
 
@@ -15,10 +15,9 @@ function Question(){
         regist_handler("show_question", setQuestion);
         regist_handler("set_timer", setTime);
         regist_handler("clear_timer", setTime.bind(this, null));
-        send("get_question");
     }, []);
 
-    return <Container id="app-container">
+    return <Container className="app-container">
         <div id="description">
             {question.question}
         </div>

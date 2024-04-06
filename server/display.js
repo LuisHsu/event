@@ -36,11 +36,13 @@ export function display_categories(){
     })
     .then(categories => categories.map(cate => cate.toJSON()))
     .then(categories => {
+        console.log(`show categories`)
         display_socket.emit("show_categories", categories);
     })
 }
 
 export function display_question(question){
+    console.log(`show question ${question.id}`)
     display_socket.emit("show_question", question);
 }
 
