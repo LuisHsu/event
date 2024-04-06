@@ -21,6 +21,11 @@ ipcRenderer.on("show_question", (_, data) => {
         handlers["show_question"](data);
     }
 });
+ipcRenderer.on("show_answer", () => {
+    if("show_answer" in handlers){
+        handlers["show_answer"]();
+    }
+});
 ipcRenderer.on("set_timer", (_, data) => {
     if("set_timer" in handlers){
         handlers["set_timer"](data);

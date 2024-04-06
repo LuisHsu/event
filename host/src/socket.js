@@ -63,3 +63,7 @@ export function clear_timer(){
 export function set_speaker(id){
     socket.emit("set_speaker", id)
 }
+
+export function end_question(){
+    socket.emit("end_question")
+}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card, Container } from "react-bootstrap";
-import { regist_handler } from "./socket";
+import { regist_handler, send } from "./socket";
 
 import "./Category.css"
 
@@ -8,9 +8,11 @@ function Category(){
     const [categories, setCategories] = useState([]);
     const [selected, setSelected] = useState(null);
 
+    regist_handler("show_categories", setCategories);
+    regist_handler("select_category", setSelected);
+
     useEffect(() => {
-        regist_handler("show_categories", setCategories);
-        regist_handler("select_category", setSelected);
+        send("get_categories");
     }, [])
 
     return <Container className="app-container">

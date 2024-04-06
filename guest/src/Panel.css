@@ -18,6 +18,14 @@
     background-color: var(--bs-primary) !important;
     color: var(--bs-light) !important;
 }
+.choice-correct{
+    background-color: var(--bs-success) !important;
+    color: var(--bs-light) !important;
+}
+.choice-wrong{
+    background-color: var(--bs-danger) !important;
+    color: var(--bs-light) !important;
+}
 .submit-btn{
     margin-top: 2rem;
     padding: 1rem;

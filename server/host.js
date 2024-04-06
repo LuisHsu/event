@@ -1,8 +1,8 @@
 import { host_token } from "../constants.mjs";
-import { clear_timer, display_categories, display_question as show_question, fullscreen, select_category, set_timer, show_url } from "./display.js";
+import { clear_timer, display_categories, show_question, fullscreen, select_category, set_timer, show_url, show_answer } from "./display.js";
 import Guest from "./model/guest.js";
 import Question from "./model/question.js";
-import { display_question as guest_send_question } from "./guest.js";
+import { start_question as guest_start_question, end_question as guest_end_question} from "./guest.js";
 import { set_speaker } from "./speaker.js";
 
 let host_socket = null;
@@ -43,8 +43,13 @@ function display_question(id){
     .then(question => question.toJSON())
     .then(question => {
         show_question(question);
-        guest_send_question(question);
+        guest_start_question(question);
     })
+}
+
+function end_question(){
+    show_answer();
+    guest_end_question();
 }
 
 function HostAPI (io) {
@@ -73,6 +78,7 @@ function HostAPI (io) {
         host_socket.on("set_timer", set_timer)
         host_socket.on("clear_timer", clear_timer)
         host_socket.on("set_speaker", set_speaker)
+        host_socket.on("end_question", end_question)
         host_socket.on('disconnect', (reason) => {
             console.log(`host disconnect: ${reason}`)
             host_socket = null;

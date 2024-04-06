@@ -5,7 +5,7 @@ import { Cast, CheckLg, PencilSquare, PlayCircle, PlusLg, Shuffle, StopCircle, X
 
 import "./Question.css"
 import QuestionModal from "./QuestionModal";
-import { clear_timer, display_categories, display_question, select_category, set_timer } from "./socket";
+import { clear_timer, display_categories, display_question, end_question, select_category, set_timer } from "./socket";
 
 function Question(){
 
@@ -74,6 +74,7 @@ function Question(){
 
     const onEndQuestion = () => {
         if(started){
+            end_question();
             setStarted(false);
         }
     }

@@ -33,11 +33,11 @@
 }
 .answer-wrong{
     box-shadow: 0 0 10px var(--bs-danger-border-subtle), 0 0 5px inset var(--bs-danger-border-subtle);
-    background-color: var(--bs-danger-text-emphasis);
+    background-color: var(--bs-danger);
 }
 .answer-correct{
     box-shadow: 0 0 10px var(--bs-success-border-subtle), 0 0 5px inset var(--bs-success-border-subtle);
-    background-color: var(--bs-success-text-emphasis);
+    background-color: var(--bs-success);
 }
 #timer{
     position: relative;

@@ -4,7 +4,8 @@ import Guest from "./model/guest.js";
 
 let guest_io = null;
 let guests = {};
-let submits = {};
+let answer_index = null;
+var submits = {};
 
 function auth(socket, next){
     if(socket.handshake.auth
@@ -28,9 +29,31 @@ function auth(socket, next){
     }
 }
 
-export function display_question(question){
+export function start_question(question){
     submits = {};
-    guest_io.of("guest").emit("show_question", question);
+    answer_index = question.answer_index;
+    guest_io.of("guest").emit("start_question", question);
+}
+
+export function end_question(){
+    Promise.all(Object.entries(submits).map(([index, submit_set]) => {
+        let fields = ["answer_num"];
+        if(index === answer_index.toString()){
+            fields = ["answer_num", "correct_num", "score"];
+        }
+        return Guest.findAll({where: {id: [...submit_set]}})
+        .then(entries => {
+            entries.forEach(async entry => {
+                await entry.increment(fields)
+                await entry.reload()
+                const {id, score} = entry.toJSON();
+                guests[id].emit("update_score", score);
+            })
+        })
+    }))
+    .then(() => {
+        guest_io.of("guest").emit("end_question");
+    })
 }
 
 export function notify_speaker(id){
@@ -43,7 +66,6 @@ function submit_answer(id, index){
     }else{
         submits[index] = new Set([id]);
     }
-    console.dir(submits)
 }
 
 function GuestAPI(io){

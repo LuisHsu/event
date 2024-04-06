@@ -41,7 +41,7 @@ export function display_categories(){
     })
 }
 
-export function display_question(question){
+export function show_question(question){
     console.log(`show question ${question.id}`)
     display_socket.emit("show_question", question);
 }
@@ -57,6 +57,14 @@ export function set_timer(time) {
 export function clear_timer() {
     if(display_socket !== null){
         display_socket.emit("clear_timer");
+    }else{
+        console.error("no display")
+    }
+}
+
+export function show_answer(){
+    if(display_socket !== null){
+        display_socket.emit("show_answer");
     }else{
         console.error("no display")
     }

@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 import { display_token, ws_server } from "../constants.mjs";
 import io from "socket.io-client"
 
@@ -18,6 +18,24 @@ app.whenReady().then(() => {
     window.loadFile("build/index.html").then(() => {
         window.webContents.openDevTools();
     });
+})
+
+ipcMain.on("get_categories", () => {
+    if(window !== null){
+        console.log("get categories")
+        window.webContents.send("show_categories", categories);
+    }else{
+        console.error("no window")
+    }
+})
+
+ipcMain.on("get_question", () => {
+    if(window !== null){
+        console.log("get question")
+        window.webContents.send("show_question", question);
+    }else{
+        console.error("no window")
+    }
 })
 
 const socket = io(`${ws_server}/display`, {
@@ -62,8 +80,15 @@ socket.on("show_question", data => {
         window.loadFile("build/question.html")
         .then(() => {
             console.log("question loaded")
-            window.webContents.send("show_question", question);
         })
+    }else{
+        console.error("no window")
+    }
+})
+socket.on("show_answer", () => {
+    console.log("show answer")
+    if(window !== null){
+        window.webContents.send("show_answer");
     }else{
         console.error("no window")
     }

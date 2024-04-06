@@ -37,9 +37,15 @@ export function login(id, username, onLogin = () => {}, onLogout = () => {}){
             }
         })
 
-        socket.on("show_question", (data) => {
-            if("show_question" in handlers){
-                handlers["show_question"](data);
+        socket.on("start_question", (data) => {
+            if("start_question" in handlers){
+                handlers["start_question"](data);
+            }
+        })
+
+        socket.on("end_question", () => {
+            if("end_question" in handlers){
+                handlers["end_question"]();
             }
         })
 
