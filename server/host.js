@@ -1,6 +1,8 @@
 import { host_token } from "../constants.mjs";
-import { clear_timer, display_categories, display_question, fullscreen, select_category, set_timer, show_url } from "./display.js";
+import { clear_timer, display_categories, display_question as show_question, fullscreen, select_category, set_timer, show_url } from "./display.js";
 import Guest from "./model/guest.js";
+import Question from "./model/question.js";
+import { display_question as guest_send_question } from "./guest.js";
 
 let host_socket = null;
 
@@ -32,6 +34,15 @@ function delete_guest(id) {
         if(entry !== null){
             return entry.destroy().then(list_guest)
         }
+    })
+}
+
+function display_question(id){
+    Question.findOne({where: {id}})
+    .then(question => question.toJSON())
+    .then(question => {
+        show_question(question);
+        guest_send_question(question);
     })
 }
 

@@ -8,7 +8,7 @@ function Login({onLogin, onLogout}){
 
     const [username, setUsername] = useState("");
     const [error, setError] = useState(null);
-    const ticket_id = window.location.href.split("/").pop()
+    const ticket_id = window.location.hash.substring(1);
     const onLoginSubmit = (e) => {
         e.preventDefault()
         if(username !== ""){

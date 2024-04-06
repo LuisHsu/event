@@ -87,7 +87,7 @@ function Question(){
                 <Button variant="danger" onClick={onClearTimer}>Clear timer</Button>
             </InputGroup>
             <Dropdown as={ButtonGroup} align="end" onSelect={select_category.bind(this)}>
-                <Button variant="primary" onClick={display_categories}><Cast/> Display categories</Button>
+                <Button variant="primary" onClick={display_categories}><Cast/> Categories</Button>
                 <Dropdown.Toggle split variant="primary"/>
                 <Dropdown.Menu>
                     {categories.map(cate => 
@@ -97,7 +97,7 @@ function Question(){
                     )}
                 </Dropdown.Menu>
             </Dropdown>
-            <Button variant="primary" onClick={onDisplayQuestion}><Cast/> Display question</Button>
+            <Button variant="success" onClick={onDisplayQuestion}><Cast/> Start </Button>
             <Button variant="secondary" onClick={onRandomClick}><Shuffle/> Random</Button>
         </div> 
         <div id="filter-wrap">

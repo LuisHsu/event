@@ -2,6 +2,8 @@ import { guest_token } from "../constants.mjs";
 import { list_guest } from "./host.js";
 import Guest from "./model/guest.js";
 
+let guest_io = null
+
 function auth(socket, next){
     if(socket.handshake.auth
         && socket.handshake.auth.token
@@ -24,7 +26,12 @@ function auth(socket, next){
     }
 }
 
+export function display_question(question){
+    guest_io.of("guest").emit("show_question", question);
+}
+
 function GuestAPI(io){
+    guest_io = io;
     io.of("guest")
     .use(auth)
     .on('connection', socket => {

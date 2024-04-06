@@ -40,11 +40,8 @@ export function display_categories(){
     })
 }
 
-export function display_question(id){
-    Question.findOne({where: {id}})
-    .then(question => {
-        display_socket.emit("show_question", question.toJSON());
-    })
+export function display_question(question){
+    display_socket.emit("show_question", question);
 }
 
 export function set_timer(time) {
