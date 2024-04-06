@@ -1,0 +1,58 @@
+#app-container{
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: var(--bs-light);
+}
+#description{
+    width: 100%;
+    height: 45%;
+    margin: 1.25em 0 0.5em 0;
+    border-radius: var(--bs-border-radius-lg);
+    box-shadow: 0 0 10px var(--bs-info-border-subtle), 0 0 5px inset var(--bs-info-border-subtle);
+    background-color: #cff4fc18;
+    padding: 1em;
+    font-size: 2em;
+    color: var(--bs-info-border-subtle);
+}
+.answer{
+    display: block;
+    width: 40%;
+    font-size: 1.5em;
+    box-shadow: 0 0 10px var(--bs-light-border-subtle), 0 0 5px inset var(--bs-light-border-subtle);
+    background-color: var(--bs-dark);
+    border: none;
+    color: var(--bs-light);
+    margin: 0.5em 0;
+    text-align: center;
+}
+.answer:nth-child(odd){
+    float: left;
+}
+.answer:nth-child(even){
+    float: right;
+}
+#answer-wrapper{
+    width: 100%;
+}
+#submit-button{
+    display: block;
+    width: 40%;
+    font-size: 1.5em;
+    background-color: var(--bs-primary);
+    border: none;
+    color: var(--bs-light);
+    margin: 0.5em 0;
+    text-align: center;
+}
+#timer{
+    position: relative;
+    font-size: 5em;
+    text-align: center;
+    top: 50%;
+    transform: translate(0%, -50%);
+    font-family: monospace;
+    font-weight: bold;
+}

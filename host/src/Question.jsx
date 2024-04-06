@@ -98,7 +98,6 @@ function Question(){
                 </Dropdown.Menu>
             </Dropdown>
             <Button variant="success" onClick={onDisplayQuestion}><Cast/> Start </Button>
-            <Button variant="secondary" onClick={onRandomClick}><Shuffle/> Random</Button>
         </div> 
         <div id="filter-wrap">
             <Dropdown onSelect={setFilter_cate.bind(this)}>
@@ -113,6 +112,7 @@ function Question(){
             </Dropdown>
             <Form.Check id="unused-switch" type="switch" label="Unused only" onClick={() => setFilter_unused(!filter_unused)}/>
             <Button variant="success" onClick={setShowAdd.bind(this, true)}><PlusLg/> Add question</Button>
+            <Button variant="secondary" onClick={onRandomClick}><Shuffle/> Random</Button>
         </div>
         <Table id="question-table" hover>
             <thead><tr>
