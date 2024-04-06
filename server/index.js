@@ -4,11 +4,12 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 import cors from 'cors';
 
+import { host_token } from "../constants.mjs";
 import HostAPI from "./host.js";
 import DisplayAPI from "./display.js";
 import GuestAPI from "./guest.js";
 import QuestionAPI from "./question.js";
-import { host_token } from "../constants.mjs";
+import SpeakerAPI from "./speaker.js";
 
 const app = Express();
 const httpServer = createServer(app);
@@ -33,6 +34,7 @@ HostAPI(io);
 DisplayAPI(io);
 GuestAPI(io);
 QuestionAPI(app);
+SpeakerAPI(io);
 
 httpServer.listen(5050, () => {
     console.log("Server listening on port 5050");

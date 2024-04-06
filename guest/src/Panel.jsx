@@ -9,6 +9,7 @@ function Panel({id, name}){
     const [choice, setChoice] = useState(null);
     const [disabled, setDisabled] = useState(true);
     const [question, setQuestion] = useState({});
+    const [speaker, setSpeaker] = useState(false);
 
     useEffect(() => {
         regist_handler("show_question", question => {
@@ -16,12 +17,16 @@ function Panel({id, name}){
             setQuestion(question);
             setChoice(null);
         });
+        regist_handler("set_speaker", (speaker_id) => {
+            setSpeaker(speaker_id !== null && speaker_id === id);
+        });
     }, [])
 
     return <Container id="main-panel">
         <h3>Hello, {name}</h3>
         <div id="choice-wrap">
-            {question.answers && question.answers.map((answer, index) => 
+            {speaker && <h2>You're speaker!</h2>}
+            {!speaker && question.answers && question.answers.map((answer, index) => 
                 <Button key={index}
                     className="choice-btn" size="lg"
                     variant="outline-primary"
@@ -33,7 +38,7 @@ function Panel({id, name}){
                 </Button>
             )}
         </div>
-        <Button variant="success" className="submit-btn" disabled={disabled}>Submit</Button>
+        {!speaker && <Button variant="success" className="submit-btn" disabled={disabled}>Submit</Button>}
     </Container>
 }
 

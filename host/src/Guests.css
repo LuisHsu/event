@@ -11,3 +11,23 @@
     margin-top: 10px;
     vertical-align: middle;
 }
+#guest-table td{
+    background-color: inherit;
+    color: inherit;
+}
+.guest-active{
+    background-color: var(--bs-primary);
+    color: var(--bs-light);
+}
+
+.online{
+    color: var(--bs-success);
+}
+
+.offline{
+    color: var(--bs-danger);
+}
+
+.guest-active .online, .guest-active .offline{
+    color: inherit;
+}

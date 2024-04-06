@@ -30,6 +30,10 @@ export function display_question(question){
     guest_io.of("guest").emit("show_question", question);
 }
 
+export function notify_speaker(id){
+    guest_io.of("guest").emit("set_speaker", id);
+}
+
 function GuestAPI(io){
     guest_io = io;
     io.of("guest")

@@ -33,6 +33,13 @@ export function login(id, username, onLogin = () => {}, onLogout = () => {}){
             }
         })
 
+        socket.on("set_speaker", (data) => {
+            console.log(`speaker ${data}`)
+            if("set_speaker" in handlers){
+                handlers["set_speaker"](data);
+            }
+        })
+
         socket.on("disconnect", () => {
             onLogout();
         })
