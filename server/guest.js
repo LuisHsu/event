@@ -2,7 +2,9 @@ import { guest_token } from "../constants.mjs";
 import { list_guest } from "./host.js";
 import Guest from "./model/guest.js";
 
-let guest_io = null
+let guest_io = null;
+let guests = {};
+let submits = {};
 
 function auth(socket, next){
     if(socket.handshake.auth
@@ -27,6 +29,7 @@ function auth(socket, next){
 }
 
 export function display_question(question){
+    submits = {};
     guest_io.of("guest").emit("show_question", question);
 }
 
@@ -34,23 +37,40 @@ export function notify_speaker(id){
     guest_io.of("guest").emit("set_speaker", id);
 }
 
+function submit_answer(id, index){
+    if(index in submits){
+        submits[index].add(id);
+    }else{
+        submits[index] = new Set([id]);
+    }
+    console.dir(submits)
+}
+
 function GuestAPI(io){
     guest_io = io;
     io.of("guest")
     .use(auth)
     .on('connection', socket => {
-        const {id, name} = socket.handshake.auth;
-        Guest.update({name, online: true}, {where: {id}})
-        .then(() => {
-            console.log(`Guest ${id} connected`)
-            list_guest()
-            socket.join(id)
-            socket.on('disconnect', (reason) => {
-                Guest.update({online: false}, {where: {id}})
-                .then(() => {
-                    console.log(`Guest ${id} disconnect: ${reason}`)
-                    list_guest();
-                    socket.leave(id)
+        Guest.findOne({
+            where: {id: socket.handshake.auth.id}
+        })
+        .then(guest => {
+            const {id, name, score} = guest.toJSON()
+            return guest.update({name, online: true})
+            .then(() => {
+                console.log(`Guest ${id} connected`)
+                socket.emit("update_score", score);
+                list_guest()
+                guests[id] = socket;
+
+                socket.on("submit_answer", submit_answer.bind(this, id))
+                socket.on('disconnect', (reason) => {
+                    Guest.update({online: false}, {where: {id}})
+                    .then(() => {
+                        console.log(`Guest ${id} disconnect: ${reason}`)
+                        list_guest();
+                        delete guests[id];
+                    })
                 })
             })
         })

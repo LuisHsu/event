@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Container, Table, Button, Badge, Dropdown, Form, ButtonGroup, InputGroup} from "react-bootstrap";
 import { add_question, delete_question, edit_question, get_questions } from "./question";
-import { Cast, CheckLg, PencilSquare, PlusLg, Shuffle, XCircle, XLg } from "react-bootstrap-icons";
+import { Cast, CheckLg, PencilSquare, PlayCircle, PlusLg, Shuffle, StopCircle, XCircle, XLg } from "react-bootstrap-icons";
 
 import "./Question.css"
 import QuestionModal from "./QuestionModal";
@@ -17,6 +17,7 @@ function Question(){
     const [selected, setSelected] = useState(null);
     const [filter_unused, setFilter_unused] = useState(false);
     const [filter_cate, setFilter_cate] = useState(null);
+    const [started, setStarted] = useState(false);
     const [time, setTime] = useState(1);
 
     const get_question_list = () => {
@@ -64,9 +65,16 @@ function Question(){
         setSelected(questions[Math.floor(Math.random() * questions.length)].id)
     }
 
-    const onDisplayQuestion = () => {
+    const onStartQuestion = () => {
         if(selected !== null){
             display_question(selected);
+            setStarted(true);
+        }
+    }
+
+    const onEndQuestion = () => {
+        if(started){
+            setStarted(false);
         }
     }
 
@@ -97,7 +105,9 @@ function Question(){
                     )}
                 </Dropdown.Menu>
             </Dropdown>
-            <Button variant="success" onClick={onDisplayQuestion}><Cast/> Start </Button>
+            {started ? <Button variant="danger" onClick={onEndQuestion}><StopCircle/> End </Button>
+                : <Button variant="success" onClick={onStartQuestion}><PlayCircle/> Start </Button>
+            }
         </div> 
         <div id="filter-wrap">
             <Dropdown onSelect={setFilter_cate.bind(this)}>

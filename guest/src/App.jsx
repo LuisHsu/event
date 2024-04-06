@@ -9,8 +9,8 @@ function App(){
 
     const [credential, setCredential] = useState(null);
 
-    const onLogin = (id, username) => {
-        setCredential({id, username});
+    const onLogin = (user) => {
+        setCredential(user);
     }
 
     return <Container id="app-container">
