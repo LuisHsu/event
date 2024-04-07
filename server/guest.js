@@ -1,6 +1,7 @@
 import { guest_token } from "../constants.mjs";
 import { list_guest } from "./host.js";
 import Guest from "./model/guest.js";
+import { speaker } from "./speaker.js";
 
 let guest_io = null;
 let guests = {};
@@ -41,7 +42,7 @@ export function end_question(){
         if(index === answer_index.toString()){
             fields = ["answer_num", "correct_num", "score"];
         }
-        return Guest.findAll({where: {id: [...submit_set]}})
+        return Guest.findAll({where: {id: [...submit_set.filter(g => g !== speaker)]}})
         .then(entries => {
             entries.forEach(async entry => {
                 await entry.increment(fields)

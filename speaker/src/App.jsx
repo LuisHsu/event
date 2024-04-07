@@ -1,45 +1,56 @@
 import { Alert, Button, Container } from "react-bootstrap";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import "./App.css"
-import Timer from "./Timer";
+import { regist_handler } from "./socket";
 
 function App(){
 
-    // const [question, setQuestion] = useState({});
-    const [time, setTime] = useState(null);
+    const [choice, setChoice] = useState(null);
+    const [reveal, setReveal] = useState(false);
+    const [question, setQuestion] = useState({});
+    const [speaker, setSpeaker] = useState({});
 
-    // useEffect(() => {
-    //     regist_handler("show_question", setQuestion);
-    //     regist_handler("set_timer", setTime);
-    //     regist_handler("clear_timer", setTime.bind(this, null));
-    //     send("get_question");
-    // }, []);
+    useEffect(() => {
+        regist_handler("set_speaker", setSpeaker);
+        regist_handler("start_question", question => {
+            setReveal(false);
+            setQuestion(question);
+        });
+    }, []);
+
+    const onSubmitAnswer = () => {
+        setReveal(true);
+    }
+
+    function choice_class(index){
+        if(reveal){
+            if(index === question.answer_index){
+                return " answer-correct";
+            }else if(index === choice){
+                return " answer-wrong";
+            }
+        }else if(choice !== null && index === choice){
+            return " answer-selected";
+        }
+        return "";
+    }
 
     return <Container id="app-container">
-        <h3>Hello, aaa</h3>
+        {speaker.name && <h3>Hello, {speaker.name}</h3>}
         <div id="description">
-            Test question
+            {question.question}
         </div>
         <div id="answer-wrapper">
-            <Alert className="answer">
-                A
-            </Alert>
-            <Alert className="answer">
-                B
-            </Alert>
-            <Alert className="answer">
-                C
-            </Alert>
-            {/* {question.answers && question.answers.map((answer, index) => 
-                <Alert key={index} className="answer">
+            {question.answers && question.answers.map((answer, index) => 
+                <Alert key={index} className={`answer${choice_class(index)}`}
+                    onClick={setChoice.bind(this, index)}
+                >
                     {answer}
                 </Alert>
-            )}*/}
-            <Timer time={time} setTime={setTime}/>
-            
+            )}
         </div>
-        <Button id="submit-button">Submit</Button>
+        <Button id="submit-button" onClick={onSubmitAnswer} disabled={reveal}>Submit</Button>
     </Container>
 }
 

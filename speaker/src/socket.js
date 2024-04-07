@@ -1,28 +1,30 @@
 import io from "socket.io-client"
-import {guest_token, ws_server} from "./constants.mjs"
+import {speaker_token, ws_server} from "./constants.mjs"
 
-let socket = null;
+const socket = io(`${ws_server}/speaker`, {
+    auth:{
+        token: speaker_token
+    }
+})
 
-export function login(id, username, onLogin = () => {}, onLogout = () => {}){
-    return new Promise((resolve, reject) => {
-        if(socket !== null){
-            socket.disconnect()
-            socket = null;
-        }
-        socket = io(`${ws_server}/guest`, {
-            auth:{
-                token: guest_token,
-                id, name: username
-            }
-        })
-        .on("connect", () => {
-            resolve()
-            onLogin(id, username)
-        })
-        .on("connect_error", reject)
+let handlers = {}
 
-        socket.on("disconnect", () => {
-            onLogout();
-        })
-    })
+export function regist_handler(key, handler){
+    handlers[key] = handler;
 }
+
+socket.on('connect', () => {
+    console.log(`Socket connected with ID: ${socket.id}`)
+})
+
+socket.on('set_speaker', (speaker) => {
+    if("set_speaker" in handlers){
+        handlers["set_speaker"](speaker);
+    }
+})
+
+socket.on('start_question', (question) => {
+    if("start_question" in handlers){
+        handlers["start_question"](question);
+    }
+})

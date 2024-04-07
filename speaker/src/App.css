@@ -27,12 +27,25 @@
     color: var(--bs-light);
     margin: 0.5em 0;
     text-align: center;
+    z-index: 10;
 }
 .answer:nth-child(odd){
     float: left;
 }
 .answer:nth-child(even){
     float: right;
+}
+.answer-selected{
+    box-shadow: 0 0 10px var(--bs-primary-border-subtle), 0 0 5px inset var(--bs-primary-border-subtle);
+    background-color: var(--bs-primary-text-emphasis);
+}
+.answer-wrong{
+    box-shadow: 0 0 10px var(--bs-danger-border-subtle), 0 0 5px inset var(--bs-danger-border-subtle);
+    background-color: var(--bs-danger);
+}
+.answer-correct{
+    box-shadow: 0 0 10px var(--bs-success-border-subtle), 0 0 5px inset var(--bs-success-border-subtle);
+    background-color: var(--bs-success);
 }
 #answer-wrapper{
     width: 100%;

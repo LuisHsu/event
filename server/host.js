@@ -3,7 +3,7 @@ import { clear_timer, display_categories, show_question, fullscreen, select_cate
 import Guest from "./model/guest.js";
 import Question from "./model/question.js";
 import { start_question as guest_start_question, end_question as guest_end_question} from "./guest.js";
-import { set_speaker } from "./speaker.js";
+import { set_speaker, start_question as speaker_start_question } from "./speaker.js";
 
 let host_socket = null;
 
@@ -44,6 +44,7 @@ function display_question(id){
     .then(question => {
         show_question(question);
         guest_start_question(question);
+        speaker_start_question(question);
     })
 }
 
