@@ -52,6 +52,15 @@ socket.on("show_url", url => {
     }
 })
 
+socket.on("show_choice", choice => {
+    console.log(`show choice ${choice}`)
+    if(window !== null){
+        window.webContents.send("show_choice", choice);
+    }else{
+        console.error("no window")
+    }
+})
+
 socket.on("fullscreen", value => {
     if(window !== null){
         window.setFullScreen(value);

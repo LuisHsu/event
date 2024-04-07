@@ -26,6 +26,12 @@ ipcRenderer.on("show_answer", () => {
         handlers["show_answer"]();
     }
 });
+ipcRenderer.on("show_choice", (_, data) => {
+    console.log("show_choice")
+    if("show_choice" in handlers){
+        handlers["show_choice"](data);
+    }
+});
 ipcRenderer.on("set_timer", (_, data) => {
     if("set_timer" in handlers){
         handlers["set_timer"](data);

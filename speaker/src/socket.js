@@ -13,6 +13,10 @@ export function regist_handler(key, handler){
     handlers[key] = handler;
 }
 
+export function submit_answer(index){
+    socket.emit("submit_answer", index);
+}
+
 socket.on('connect', () => {
     console.log(`Socket connected with ID: ${socket.id}`)
 })

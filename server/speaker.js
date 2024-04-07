@@ -1,9 +1,11 @@
 import { speaker_token } from "../constants.mjs";
+import { show_choice } from "./display.js";
 import { notify_speaker } from "./guest.js";
 import Guest from "./model/guest.js";
 
 let speaker_socket = null;
 export var speaker = null;
+export var speaker_choice = null;
 
 export function set_speaker(id){
     speaker = id;
@@ -17,6 +19,11 @@ export function set_speaker(id){
 
 export function start_question(question){
     speaker_socket.emit("start_question", question);
+}
+
+function submit_answer(choice){
+    speaker_choice = choice;
+    show_choice(choice);
 }
 
 function SpeakerAPI(io){
@@ -34,6 +41,7 @@ function SpeakerAPI(io){
     .on('connection', socket => {
         speaker_socket = socket;
         console.log("speaker connected")
+        speaker_socket.on("submit_answer", submit_answer);
         speaker_socket.on('disconnect', (reason) => {
             console.log(`speaker disconnect: ${reason}`)
             speaker_socket = null;

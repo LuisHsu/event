@@ -2,7 +2,7 @@ import { Alert, Button, Container } from "react-bootstrap";
 import { useEffect, useState } from "react";
 
 import "./App.css"
-import { regist_handler } from "./socket";
+import { regist_handler, submit_answer } from "./socket";
 
 function App(){
 
@@ -16,10 +16,12 @@ function App(){
         regist_handler("start_question", question => {
             setReveal(false);
             setQuestion(question);
+            setChoice(null);
         });
     }, []);
 
     const onSubmitAnswer = () => {
+        submit_answer(choice);
         setReveal(true);
     }
 

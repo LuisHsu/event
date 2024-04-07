@@ -70,6 +70,14 @@ export function show_answer(){
     }
 }
 
+export function show_choice(choice){
+    if(display_socket !== null){
+        display_socket.emit("show_choice", choice);
+    }else{
+        console.error("no display")
+    }
+}
+
 function DisplayAPI (io) {
     io.of("display")
     .use((socket, next) => {

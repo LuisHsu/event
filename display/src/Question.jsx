@@ -8,23 +8,37 @@ import { regist_handler, send } from "./socket.js";
 
 function Question(){
 
+    const [choice, setChoice] = useState(null);
     const [question, setQuestion] = useState({});
     const [time, setTime] = useState(null);
-    const [answer_index, setAnswerIndex] = useState(null);
+    const [reveal, setReveal] = useState(false);
 
     regist_handler("show_question", (data) => {
-        setAnswerIndex(null);
+        setReveal(false);
         setQuestion(data);
+        setChoice(null);
     });
-    regist_handler("show_answer", () => {
-        setAnswerIndex(question.answer_index);
-    });
+    regist_handler("show_answer", setReveal.bind(this, true));
     regist_handler("set_timer", setTime);
+    regist_handler("show_choice", setChoice);
     regist_handler("clear_timer", setTime.bind(this, null));
 
     useEffect(() => {
         send("get_question");
     }, [])
+
+    function choice_class(index){
+        if(reveal){
+            if(index === question.answer_index){
+                return " answer-correct";
+            }else if(index === choice){
+                return " answer-wrong";
+            }
+        }else if(choice !== null && index === choice){
+            return " answer-selected";
+        }
+        return "";
+    }
 
     return <Container className="app-container">
         <div id="description">
@@ -32,11 +46,7 @@ function Question(){
         </div>
         <div id="answer-wrapper">
             {question.answers && question.answers.map((answer, index) => 
-                <Alert key={index} className={`answer${
-                    (answer_index !== null) ? (
-                        (index === answer_index) ? " answer-correct" : ""
-                    ) : ""
-                }`}>
+                <Alert key={index} className={`answer${choice_class(index)}`}>
                     {answer}
                 </Alert>
             )}
