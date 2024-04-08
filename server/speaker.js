@@ -4,17 +4,25 @@ import { notify_speaker } from "./guest.js";
 import Guest from "./model/guest.js";
 
 let speaker_socket = null;
-export var speaker = null;
-export var speaker_choice = null;
+let speaker = null;
+let speaker_choice = null;
+
+export function get_speaker_info(){
+    return {speaker, speaker_choice};
+}
 
 export function set_speaker(id){
     speaker = id;
     notify_speaker(speaker);
-    Guest.findOne({where: {id}, attributes: ["id", "name"]})
-    .then(guest => guest.toJSON())
-    .then(guest => {
-        speaker_socket.emit("set_speaker", guest);
-    })
+    if(id !== null){
+        Guest.findOne({where: {id}, attributes: ["id", "name"]})
+        .then(guest => guest.toJSON())
+        .then(guest => {
+            speaker_socket.emit("set_speaker", guest);
+        })
+    }else{
+        speaker_socket.emit("set_speaker", null);
+    }
 }
 
 export function start_question(question){

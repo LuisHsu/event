@@ -1,12 +1,12 @@
 import { guest_token } from "../constants.mjs";
 import { list_guest } from "./host.js";
 import Guest from "./model/guest.js";
-import { speaker } from "./speaker.js";
+import { get_speaker_info } from "./speaker.js";
 
 let guest_io = null;
 let guests = {};
 let answer_index = null;
-var submits = {};
+export var submits = {};
 
 function auth(socket, next){
     if(socket.handshake.auth
@@ -37,12 +37,18 @@ export function start_question(question){
 }
 
 export function end_question(){
+    if(Object.entries(submits).length === 0){
+        guest_io.of("guest").emit("end_question");
+        return;
+    }
+    const {speaker, speaker_choice} = get_speaker_info();
     Promise.all(Object.entries(submits).map(([index, submit_set]) => {
+        // Update guest score
         let fields = ["answer_num"];
         if(index === answer_index.toString()){
             fields = ["answer_num", "correct_num", "score"];
         }
-        return Guest.findAll({where: {id: [...submit_set.filter(g => g !== speaker)]}})
+        return Guest.findAll({where: {id: [...submit_set].filter(g => (speaker === null || g !== speaker))}})
         .then(entries => {
             entries.forEach(async entry => {
                 await entry.increment(fields)
@@ -53,7 +59,49 @@ export function end_question(){
         })
     }))
     .then(() => {
+        // Calculate guest choices
+        return Object.entries(submits).reduce((acc, [key, submit_set]) => {
+            if(acc.length === 0 || submit_set.size > submits[acc[0]].size){
+                return [Number.parseInt(key)];
+            }else if(submit_set.size === submits[acc[0]].size){
+                return [...acc, Number.parseInt(key)];
+            }
+            return acc;
+        }, []);
+    })
+    .then(guest_choice => {
+        // Speaker
+        if((speaker_choice !== null) && (speaker !== null)){
+            let voted = false;
+            guest_choice.forEach(choice => {
+                if(choice === speaker_choice){
+                    voted = true;
+                }
+            })
+            const correct = (speaker_choice === answer_index);
+            let fields = ["answer_num", "speak_num"];
+            let earn = 0;
+            if(voted){
+                earn += 1;
+            }
+            if(correct){
+                earn += 1;
+                fields.push("correct_num");
+            }
+            return Guest.findOne({where: {id: speaker}})
+            .then(async entry => {
+                entry.score += earn;
+                await entry.save()
+                await entry.increment(fields)
+                await entry.reload()
+                const {id, score} = entry.toJSON();
+                guests[id].emit("update_score", score);
+            })
+        }
+    })
+    .then(() => {
         guest_io.of("guest").emit("end_question");
+        list_guest();
     })
 }
 

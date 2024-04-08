@@ -25,9 +25,10 @@ function Panel({id, name}){
         });
         regist_handler("end_question", () => {
             setReveal(true);
+            setDisabled(true);
         });
         regist_handler("update_score", setScore);
-    }, [id])
+    }, [])
 
     const onSubmitAnswer = () => {
         submit_answer(choice);
