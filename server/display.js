@@ -1,6 +1,7 @@
 import { Sequelize } from "sequelize";
 import { display_token } from "../constants.mjs";
 import Question from "./model/question.js";
+import { get_submits } from "./guest.js";
 
 let display_socket = null;
 
@@ -64,7 +65,9 @@ export function clear_timer() {
 
 export function show_answer(){
     if(display_socket !== null){
-        display_socket.emit("show_answer");
+        const submits = get_submits();
+        console.log(submits);
+        display_socket.emit("show_answer", Object.entries(submits).map(([_, v]) => v.size));
     }else{
         console.error("no display")
     }

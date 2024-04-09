@@ -39,7 +39,7 @@ function App(){
     }
 
     return <Container id="app-container">
-        {speaker.name && <h3>Hello, {speaker.name}</h3>}
+        {speaker && speaker.name && <h3>Hello, {speaker.name}</h3>}
         <div id="description">
             {question.question}
         </div>

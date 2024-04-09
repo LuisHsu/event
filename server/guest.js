@@ -6,7 +6,7 @@ import { get_speaker_info } from "./speaker.js";
 let guest_io = null;
 let guests = {};
 let answer_index = null;
-export var submits = {};
+let submits = {};
 
 function auth(socket, next){
     if(socket.handshake.auth
@@ -28,6 +28,10 @@ function auth(socket, next){
     }else{
         next(new Error("Bad request"))
     }
+}
+
+export function get_submits(){
+    return submits;
 }
 
 export function start_question(question){
@@ -126,8 +130,8 @@ function GuestAPI(io){
             where: {id: socket.handshake.auth.id}
         })
         .then(guest => {
-            const {id, name, score} = guest.toJSON()
-            return guest.update({name, online: true})
+            const {id, score} = guest.toJSON()
+            return guest.update({name: socket.handshake.auth.name, online: true})
             .then(() => {
                 console.log(`Guest ${id} connected`)
                 socket.emit("update_score", score);

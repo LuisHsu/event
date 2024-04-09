@@ -12,13 +12,17 @@ function Question(){
     const [question, setQuestion] = useState({});
     const [time, setTime] = useState(null);
     const [reveal, setReveal] = useState(false);
+    const [submits, setSubmits] = useState([]);
 
     regist_handler("show_question", (data) => {
         setReveal(false);
         setQuestion(data);
         setChoice(null);
     });
-    regist_handler("show_answer", setReveal.bind(this, true));
+    regist_handler("show_answer", (data) => {
+        setSubmits(data);
+        setReveal(true);
+    });
     regist_handler("set_timer", setTime);
     regist_handler("show_choice", setChoice);
     regist_handler("clear_timer", setTime.bind(this, null));
@@ -47,7 +51,7 @@ function Question(){
         <div id="answer-wrapper">
             {question.answers && question.answers.map((answer, index) => 
                 <Alert key={index} className={`answer${choice_class(index)}`}>
-                    {answer}
+                    {answer} {submits[index] && <>({submits[index]})</>}
                 </Alert>
             )}
             <Timer time={time} setTime={setTime}/>

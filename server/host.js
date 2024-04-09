@@ -49,8 +49,8 @@ function display_question(id){
 }
 
 function end_question(){
-    show_answer();
     guest_end_question();
+    show_answer();
 }
 
 function HostAPI (io) {

@@ -94,10 +94,10 @@ socket.on("show_question", data => {
         console.error("no window")
     }
 })
-socket.on("show_answer", () => {
+socket.on("show_answer", (data) => {
     console.log("show answer")
     if(window !== null){
-        window.webContents.send("show_answer");
+        window.webContents.send("show_answer", data);
     }else{
         console.error("no window")
     }

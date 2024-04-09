@@ -53,7 +53,8 @@ function Guests(){
                         <td>{guest.name}</td>
                         <td>{guest.score}</td>
                         <td>{guest.answer_num}</td>
-                        <td>{guest.correct_num}</td>
+                        <td>{guest.correct_num} ({
+                        Math.round(guest.correct_num * 100.0 / guest.answer_num + 1e-6) / 100.0}%)</td>
                         <td>{guest.speak_num}</td>
                         <td>{guest.online ? <CheckLg className="online"/> : <XLg className="offline"/>}</td>
                         <td>

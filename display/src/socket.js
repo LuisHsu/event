@@ -21,9 +21,9 @@ ipcRenderer.on("show_question", (_, data) => {
         handlers["show_question"](data);
     }
 });
-ipcRenderer.on("show_answer", () => {
+ipcRenderer.on("show_answer", (_, data) => {
     if("show_answer" in handlers){
-        handlers["show_answer"]();
+        handlers["show_answer"](data);
     }
 });
 ipcRenderer.on("show_choice", (_, data) => {
