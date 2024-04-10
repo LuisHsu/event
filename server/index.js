@@ -21,11 +21,11 @@ const io = new Server(httpServer, {
 app.use(cors())
 app.use((req, res, next) => {
     const auth_header = req.get("Authorization")
-    if(auth_header !== `Basic ${host_token}`){
+    if(auth_header === `Basic ${host_token}`){
+        next();
+    }else{
         res.status(401).end("Unauthorized");
         next("Unauthorized");
-    }else{
-        next();
     }
 })
 app.use(BodyParser.json())
@@ -36,6 +36,6 @@ GuestAPI(io);
 QuestionAPI(app);
 SpeakerAPI(io);
 
-httpServer.listen(5050, () => {
+httpServer.listen(5050, '0.0.0.0', () => {
     console.log("Server listening on port 5050");
 })
