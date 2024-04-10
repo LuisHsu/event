@@ -41,10 +41,11 @@ jobs:
           echo 'export const speaker_token = "${{secrets.SPEAKER_TOKEN}}"' >> constants.mjs
       - name: Build
         run: |
-          cd display && npm install && npm run build && cd ..
-          cd host && npm install && npm run build && cd ..
-          cd guest && npm install && npm run build && cd ..
-          cd speaker && npm install && npm run build && cd ..
+          mkdir build/
+          cd display && npm install && npm run build && mv build/ ../build/display && cd ..
+          cd host && npm install && npm run build && mv build/ ../build/host && cd ..
+          cd guest && npm install && npm run build && mv build/ ../build/guest && cd ..
+          cd speaker && npm install && npm run build && mv build/ ../build/speaker && cd ..
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
