@@ -22,6 +22,7 @@
       "react-app"
     ]
   },
+  "homepage": "/host",
   "browserslist": {
     "production": [
       ">0.2%",
