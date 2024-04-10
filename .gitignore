@@ -6,3 +6,5 @@ exclude
 build/
 out/
 scripts/
+constants.mjs
+*.pem
