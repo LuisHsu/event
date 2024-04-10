@@ -39,7 +39,7 @@ jobs:
           echo 'export const display_token = "${{secrets.DISPLAY_TOKEN}}"' >> constants.mjs
           echo 'export const guest_token = "${{secrets.GUEST_TOKEN}}"' >> constants.mjs
           echo 'export const speaker_token = "${{secrets.SPEAKER_TOKEN}}"' >> constants.mjs
-          rm host/constants.mjs && cp constants.mjs host/constants.mjs
+          rm -f host/constants.mjs && cp constants.mjs host/constants.mjs
       - name: Build
         run: |
           mkdir build/
