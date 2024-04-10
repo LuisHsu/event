@@ -8,7 +8,7 @@ let question = {};
 
 app.whenReady().then(() => {
     window = new BrowserWindow({
-        fullscreen: false,
+        fullscreen: true,
         autoHideMenuBar: false,
         webPreferences: {
             nodeIntegration: true,
@@ -16,7 +16,7 @@ app.whenReady().then(() => {
         }
     });
     window.loadFile("build/index.html").then(() => {
-        window.webContents.openDevTools();
+        console.log("Window opened")
     });
 })
 
