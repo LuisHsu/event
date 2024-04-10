@@ -13,7 +13,7 @@
     "react-scripts": "^5.0.1",
     "socket.io-client": "^4.7.5"
   },
-  "homepage": "/speaker",
+  "homepage": "/event/speaker",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build"
