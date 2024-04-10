@@ -28,7 +28,7 @@ function Panel({id, name}){
             setDisabled(true);
         });
         regist_handler("update_score", setScore);
-    }, [])
+    }, [id])
 
     const onSubmitAnswer = () => {
         submit_answer(choice);
