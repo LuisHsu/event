@@ -1,6 +1,8 @@
 import { app, BrowserWindow, ipcMain } from "electron";
-import { display_token, ws_server } from "../constants.mjs";
 import io from "socket.io-client"
+
+const display_token = "tok_display";
+const ws_server = "ws://localhost:5050"
 
 let window = null;
 let categories = [];

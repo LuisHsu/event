@@ -1,6 +1,6 @@
 import Express from "express";
 import BodyParser from "body-parser"
-import { createServer } from "https";
+import { createServer } from "http";
 import { Server } from "socket.io";
 import fs from "fs";
 import cors from 'cors';
@@ -13,10 +13,11 @@ import QuestionAPI from "./question.js";
 import SpeakerAPI from "./speaker.js";
 
 const app = Express();
-const httpServer = createServer({
-    key: fs.readFileSync(ssl_key, 'utf8'),
-    cert: fs.readFileSync(ssl_cert, 'utf8')
-}, app);
+// const httpServer = createServer({
+//     key: fs.readFileSync(ssl_key, 'utf8'),
+//     cert: fs.readFileSync(ssl_cert, 'utf8')
+// }, app);
+const httpServer = createServer(app);
 const io = new Server(httpServer, {
     cors:{
         origin: "*"

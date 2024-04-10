@@ -4,3 +4,4 @@ db.sqlite
 .vscode
 exclude
 build/
+out/
