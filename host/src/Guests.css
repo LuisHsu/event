@@ -31,3 +31,7 @@
 .guest-active .online, .guest-active .offline{
     color: inherit;
 }
+
+#sort-dropdown{
+    flex-grow: 1;
+}

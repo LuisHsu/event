@@ -57,7 +57,7 @@ function Question(){
     }
 
     const onSelectQuestion = (id) => {
-        setSelected(id)
+        setSelected(id);
     }
 
     const onRandomClick = () => {
@@ -76,6 +76,7 @@ function Question(){
         if(started){
             end_question();
             setStarted(false);
+            get_question_list();
         }
     }
 

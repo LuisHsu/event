@@ -30,21 +30,29 @@ export function select_category(value) {
 }
 
 export function display_categories(){
-    Question.findAll({
-        attributes: ["category", [Sequelize.fn('COUNT', Sequelize.col('id')), "count"]],
-        group:["category"],
-        where: {used: false}
-    })
-    .then(categories => categories.map(cate => cate.toJSON()))
-    .then(categories => {
-        console.log(`show categories`)
-        display_socket.emit("show_categories", categories);
-    })
+    if(display_socket !== null){
+        Question.findAll({
+            attributes: ["category", [Sequelize.fn('COUNT', Sequelize.col('id')), "count"]],
+            group:["category"],
+            where: {used: false}
+        })
+        .then(categories => categories.map(cate => cate.toJSON()))
+        .then(categories => {
+            console.log(`show categories`)
+            display_socket.emit("show_categories", categories);
+        })
+    }else{
+        console.error("no display")
+    }
 }
 
 export function show_question(question){
-    console.log(`show question ${question.id}`)
-    display_socket.emit("show_question", question);
+    if(display_socket !== null){
+        console.log(`show question ${question.id}`)
+        display_socket.emit("show_question", question);
+    }else{
+        console.error("no display")
+    }
 }
 
 export function set_timer(time) {

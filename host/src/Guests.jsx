@@ -1,5 +1,5 @@
 import Container from "react-bootstrap/Container"
-import { Button, Table, InputGroup, Form } from "react-bootstrap";
+import { Button, Table, InputGroup, Form, Dropdown, ButtonGroup } from "react-bootstrap";
 import { useState } from "react";
 import { CheckLg, Mic, MicMute, PlusLg, XCircle, XLg } from "react-bootstrap-icons";
 
@@ -10,7 +10,24 @@ function Guests(){
     const [guests, setGuests] = useState(guest_list);
     const [new_guest, setNewGuest] = useState("");
     const [speaker, setSpeaker] = useState(null);
-    register_guests(setGuests);
+    const [sorter, setSorter] = useState("name");
+
+    function sorted_guests(guests, sorter){
+        guests.sort((a, b) => {
+            if(sorter === "correct_percent"){
+                return (b.correct_num / (b.answer_num + 1e-6)) - (a.correct_num / (a.answer_num + 1e-6));
+            }else if(sorter === "name"){
+                return ("" + a.name).localeCompare(b.name);
+            }else{
+                return b[sorter] - a[sorter];
+            }
+        })
+        return guests;
+    }
+
+    register_guests(guests => {
+        setGuests(sorted_guests(guests, sorter));
+    });
 
     const onAddGuest = () => {
         add_guest(new_guest)
@@ -23,11 +40,30 @@ function Guests(){
         set_speaker(id)
         setSpeaker(id)
     }
+    const onSetSorter = (value) => {
+        setSorter(value);
+        setGuests(sorted_guests(guests, value));
+    }   
 
     return (
         <Container className="content">
             <h3>Guest list</h3>
             <div className="btns-wrap">
+                <div id="sort-dropdown">
+                    <Dropdown as={ButtonGroup} onSelect={onSetSorter}>
+                        <Dropdown.Toggle variant="outline-secondary">
+                            Sort by
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            <Dropdown.Item eventKey="name">Name</Dropdown.Item>
+                            <Dropdown.Item eventKey="score">Score</Dropdown.Item>
+                            <Dropdown.Item eventKey="answer_num">Answer</Dropdown.Item>
+                            <Dropdown.Item eventKey="correct_num">Correct count</Dropdown.Item>
+                            <Dropdown.Item eventKey="correct_percent">Corrent percent</Dropdown.Item>
+                            <Dropdown.Item eventKey="speak_num">Speak</Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </div>
                 <InputGroup className="add-guest">
                     <Form.Control type="text" placeholder="Guest ID to add"
                         value={new_guest} onChange={(e) => setNewGuest(e.target.value)}
@@ -54,7 +90,7 @@ function Guests(){
                         <td>{guest.score}</td>
                         <td>{guest.answer_num}</td>
                         <td>{guest.correct_num} ({
-                        Math.round(guest.correct_num * 100.0 / guest.answer_num + 1e-6) / 100.0}%)</td>
+                        Math.round(guest.correct_num * 100.0 / (guest.answer_num + 1e-6)) / 100.0}%)</td>
                         <td>{guest.speak_num}</td>
                         <td>{guest.online ? <CheckLg className="online"/> : <XLg className="offline"/>}</td>
                         <td>

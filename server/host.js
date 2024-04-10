@@ -40,6 +40,11 @@ function delete_guest(id) {
 
 function display_question(id){
     Question.findOne({where: {id}})
+    .then(async question => {
+        question.used = true;
+        await question.save();
+        return question;
+    })
     .then(question => question.toJSON())
     .then(question => {
         show_question(question);

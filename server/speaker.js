@@ -18,15 +18,21 @@ export function set_speaker(id){
         Guest.findOne({where: {id}, attributes: ["id", "name"]})
         .then(guest => guest.toJSON())
         .then(guest => {
-            speaker_socket.emit("set_speaker", guest);
+            if(speaker_socket !== null){
+                speaker_socket.emit("set_speaker", guest);
+            }
         })
     }else{
-        speaker_socket.emit("set_speaker", null);
+        if(speaker_socket !== null){
+            speaker_socket.emit("set_speaker", null);
+        }
     }
 }
 
 export function start_question(question){
-    speaker_socket.emit("start_question", question);
+    if(speaker_socket !== null){
+        speaker_socket.emit("start_question", question);
+    }
 }
 
 function submit_answer(choice){
