@@ -39,10 +39,10 @@ jobs:
           echo 'export const display_token = "${{secrets.DISPLAY_TOKEN}}"' >> constants.mjs
           echo 'export const guest_token = "${{secrets.GUEST_TOKEN}}"' >> constants.mjs
           echo 'export const speaker_token = "${{secrets.SPEAKER_TOKEN}}"' >> constants.mjs
-          rm host/src/constants.mjs && cp constants.mjs host/src/constants.mjs
-          rm guest/src/constants.mjs && cp constants.mjs guest/src/constants.mjs
-          rm speaker/src/constants.mjs && cp constants.mjs speaker/src/constants.mjs
-          rm display/constants.mjs && cp constants.mjs display/constants.mjs
+          rm -f host/src/constants.mjs && cp constants.mjs host/src/constants.mjs
+          rm -f guest/src/constants.mjs && cp constants.mjs guest/src/constants.mjs
+          rm -f speaker/src/constants.mjs && cp constants.mjs speaker/src/constants.mjs
+          rm -f display/constants.mjs && cp constants.mjs display/constants.mjs
       - name: Build
         run: |
           mkdir build/
