@@ -37,7 +37,7 @@ app.use(BodyParser.json())
 
 HostAPI(io);
 DisplayAPI(io);
-GuestAPI(io);
+GuestAPI(io, app);
 QuestionAPI(app);
 SpeakerAPI(io);
 

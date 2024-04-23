@@ -121,7 +121,15 @@ function submit_answer(id, index){
     }
 }
 
-function GuestAPI(io){
+function add_guest(req, res){
+    Guest.create(req.body)
+    .then(data => data.toJSON())
+    .then(JSON.stringify)
+    .then(data => {res.end(data)})
+}
+
+function GuestAPI(io, app){
+    app.put("/guest", add_guest)
     guest_io = io;
     io.of("guest")
     .use(auth)

@@ -5,3 +5,4 @@ db.sqlite
 exclude
 build/
 out/
+scripts/
