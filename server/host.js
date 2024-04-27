@@ -4,6 +4,7 @@ import Guest from "./model/guest.js";
 import Question from "./model/question.js";
 import { start_question as guest_start_question, end_question as guest_end_question} from "./guest.js";
 import { set_speaker, start_question as speaker_start_question } from "./speaker.js";
+import { reset_used } from "./question.js";
 
 let host_socket = null;
 
@@ -85,6 +86,7 @@ function HostAPI (io) {
         host_socket.on("clear_timer", clear_timer)
         host_socket.on("set_speaker", set_speaker)
         host_socket.on("end_question", end_question)
+        host_socket.on("reset_used", reset_used)
         host_socket.on('disconnect', (reason) => {
             console.log(`host disconnect: ${reason}`)
             host_socket = null;

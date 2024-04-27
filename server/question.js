@@ -26,6 +26,13 @@ function update_question(req, res){
     .then(data => {res.end(data)})
 }
 
+export function reset_used(){
+    Question.update({used: false}, {where: {used: true}})
+    .then(() => {
+        console.log("Reset used")
+    })
+}
+
 function QuestionAPI(app){
     app.get("/questions", get_questions)
     app.put("/question", add_question)

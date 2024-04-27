@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { Container, Table, Button, Badge, Dropdown, Form, ButtonGroup, InputGroup} from "react-bootstrap";
 import { add_question, delete_question, edit_question, get_questions } from "./question";
-import { Cast, CheckLg, PencilSquare, PlayCircle, PlusLg, Shuffle, StopCircle, XCircle, XLg } from "react-bootstrap-icons";
+import { ArrowCounterclockwise, Cast, CheckLg, PencilSquare, PlayCircle, PlusLg, Shuffle, StopCircle, XCircle, XLg } from "react-bootstrap-icons";
 
 import "./Question.css"
 import QuestionModal from "./QuestionModal";
-import { clear_timer, display_categories, display_question, end_question, select_category, set_timer } from "./socket";
+import { clear_timer, display_categories, display_question, end_question, reset_used, select_category, set_timer } from "./socket";
 
 function Question(){
 
@@ -125,6 +125,8 @@ function Question(){
             <Form.Check id="unused-switch" type="switch" label="Unused only" onClick={() => setFilter_unused(!filter_unused)}/>
             <Button variant="success" onClick={setShowAdd.bind(this, true)}><PlusLg/> Add question</Button>
             <Button variant="secondary" onClick={onRandomClick}><Shuffle/> Random</Button>
+            <div style={{flexGrow: 1}}></div>
+            <Button variant="danger" onClick={reset_used}><ArrowCounterclockwise/> Reset used</Button>
         </div>
         <Table id="question-table" hover>
             <thead><tr>

@@ -1,5 +1,6 @@
 import io from "socket.io-client"
 import {host_token, ws_server} from "./constants"
+import { get_questions } from "./question";
 
 const socket = io(`${ws_server}/host`, {
     auth:{
@@ -49,21 +50,26 @@ export function add_guest(id){
 }
 
 export function delete_guest(id){
-    socket.emit("delete_guest", id)
+    socket.emit("delete_guest", id);
 }
 
 export function set_timer(time){
-    socket.emit("set_timer", time)
+    socket.emit("set_timer", time);
 }
 
 export function clear_timer(){
-    socket.emit("clear_timer")
+    socket.emit("clear_timer");
 }
 
 export function set_speaker(id){
-    socket.emit("set_speaker", id)
+    socket.emit("set_speaker", id);
 }
 
 export function end_question(){
-    socket.emit("end_question")
+    socket.emit("end_question");
+}
+
+export function reset_used(){
+    socket.emit("reset_used");
+    get_questions();
 }
