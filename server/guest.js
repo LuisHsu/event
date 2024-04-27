@@ -86,10 +86,9 @@ export function end_question(){
             let fields = ["answer_num", "speak_num"];
             let earn = 0;
             if(voted){
-                earn += 1;
+                earn += 2;
             }
             if(correct){
-                earn += 1;
                 fields.push("correct_num");
             }
             return Guest.findOne({where: {id: speaker}})

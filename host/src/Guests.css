@@ -7,6 +7,13 @@
     justify-content: end;
     gap: 10px;
 }
+.qrlink{
+    text-decoration: none;
+    color: var(--bs-primary);
+}
+.qrlink:hover{
+    text-decoration: underline;
+}
 #guest-table{
     margin-top: 10px;
     vertical-align: middle;

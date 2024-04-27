@@ -4,10 +4,12 @@ import { useState } from "react";
 import { CheckLg, Mic, MicMute, PlusLg, XCircle, XLg } from "react-bootstrap-icons";
 
 import "./Guests.css"
+import QRModal from "./QRModal";
 
 function Guests(){
     const {guest_list, register_guests, add_guest, delete_guest, set_speaker} = require('./socket');
     const [guests, setGuests] = useState(guest_list);
+    const [qrdata, setQrdata] = useState(null);
     const [new_guest, setNewGuest] = useState("");
     const [speaker, setSpeaker] = useState(null);
     const [sorter, setSorter] = useState("name");
@@ -43,7 +45,13 @@ function Guests(){
     const onSetSorter = (value) => {
         setSorter(value);
         setGuests(sorted_guests(guests, value));
-    }   
+    }
+    const onShowQR = (value) => {
+        setQrdata(value);
+    }
+    const onHideQR = () => {
+        setQrdata(null);
+    }
 
     return (
         <Container className="content">
@@ -85,7 +93,7 @@ function Guests(){
                 </tr></thead>
                 <tbody>
                     {guests.map(guest => <tr key={guest.id} className={(guest.id === speaker) ? "guest-active" : ""}>
-                        <td>{guest.id}</td>
+                        <td><b className="qrlink" onClick={onShowQR.bind(this, guest.id)}>{guest.id}</b></td>
                         <td>{guest.name}</td>
                         <td>{guest.score}</td>
                         <td>{guest.answer_num}</td>
@@ -102,6 +110,7 @@ function Guests(){
                     </tr>)}
                 </tbody>
             </Table>
+            <QRModal data={qrdata} onClose={onHideQR} />
         </Container>
     )
 }

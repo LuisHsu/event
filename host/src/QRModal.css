@@ -1,0 +1,9 @@
+#qr-canvas {
+    width: 200px !important;
+    height: 200px !important;
+}
+#qr-wrapper{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
